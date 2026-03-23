@@ -1,466 +1,54 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Job-Übersicht</title>
-  <style>
-    :root {
-      --bg: #0b1020;
-      --bg2: #121933;
-      --card: rgba(255,255,255,0.08);
-      --line: rgba(255,255,255,0.14);
-      --text: #eef2ff;
-      --muted: #b6c2e1;
-      --accent: #7dd3fc;
-      --accent2: #c084fc;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; background:
-      radial-gradient(circle at top left, rgba(125,211,252,.18), transparent 30%),
-      radial-gradient(circle at top right, rgba(192,132,252,.16), transparent 28%),
-      linear-gradient(180deg, var(--bg), var(--bg2));
-      color: var(--text);
-    }
-    .container { max-width: 1180px; margin: 0 auto; padding: 40px 20px 56px; }
-    header {
-      margin-bottom: 28px; padding: 28px; border: 1px solid var(--line); border-radius: 24px;
-      background: rgba(255,255,255,0.05); backdrop-filter: blur(8px);
-      box-shadow: 0 18px 50px rgba(0,0,0,.22);
-    }
-    h1 { margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; }
-    .subtitle { margin: 0; color: var(--muted); max-width: 900px; line-height: 1.6; }
-    .summary {
-      margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px;
-    }
-    .summary .pill {
-      background: rgba(255,255,255,.08); color: var(--text); border: 1px solid var(--line);
-    }
-    .cards { display: grid; gap: 18px; }
-    .card {
-      border: 1px solid var(--line); border-radius: 22px; padding: 22px;
-      background: rgba(255,255,255,0.055); box-shadow: 0 16px 40px rgba(0,0,0,.16);
-    }
-    .card h2 { margin: 10px 0 8px; font-size: 1.45rem; }
-    .meta { display: flex; flex-wrap: wrap; gap: 10px; }
-    .pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 12px; border-radius: 999px; font-size: .92rem;
-      color: var(--accent); background: rgba(125,211,252,.08); border: 1px solid rgba(125,211,252,.22);
-    }
-    .new-pill { color: #d8b4fe; border-color: rgba(216,180,254,.28); background: rgba(216,180,254,.10); }
-    .link a {
-      color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3);
-    }
-    .link a:hover { color: var(--accent); }
-    .grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-    }
-    .section {
-      margin-top: 12px; padding: 16px; border-radius: 18px;
-      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-    }
-    .section h3 { margin: 0 0 10px; font-size: 1rem; color: var(--accent); }
-    .section p { margin: 0; color: var(--text); line-height: 1.65; }
-    footer {
-      margin-top: 28px; color: var(--muted); font-size: .95rem; line-height: 1.6;
-      border-top: 1px solid var(--line); padding-top: 18px;
-    }
-    @media (max-width: 820px) {
-      .grid { grid-template-columns: 1fr; }
-      .container { padding: 24px 14px 40px; }
-      .card, header { border-radius: 18px; }
-    }
-  </style>
+<meta charset="utf-8"/>
+<title>Job Linkliste</title>
+<style>
+body { font-family: Arial; padding: 20px; background:#0b1020; color:white;}
+.job {
+ display:block;
+ padding:12px;
+ margin:6px 0;
+ background:#1e293b;
+ border-radius:8px;
+ text-decoration:none;
+ color:white;
+}
+.job:hover { background:#334155; }
+.job:visited { background:#475569; }
+.title { font-weight:bold; }
+.meta { font-size:0.9rem; color:#cbd5f5; }
+
+.num {
+  display:inline-block;
+  min-width: 2rem;
+  margin-right: 10px;
+  font-weight: 700;
+  color:#7dd3fc;
+}
+.titleline {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Job-Übersicht Mario</h1>
-      <div class="summary">
-        <span class="pill">20 Anzeigen insgesamt</span>
-        <span class="pill">Schwerpunkte: Product, Projektmanagement, Prozesse, HR</span>
-        <span class="pill">Quellen: Stepstone, EPG Jobs, Debeka, Indeed, SmartRecruiters</span>
-      </div>
-    </header>
-
-    <main class="cards">
-<article class="card">
-      <div class="meta">
-        <span class="pill">Reisen Aktuell GmbH</span>
-        <span class="pill">Koblenz</span>
-      </div>
-      <h2>Product Owner (m/w/d)</h2>
-      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Inhabergeführter Reiseveranstalter mit Sitz in Koblenz, gegründet 2010, rund 300 Mitarbeitende, Fokus auf günstige Qualitätsreisen und digitale Weiterentwicklung interner Systeme.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Studium/Ausbildung mit IT-Bezug oder vergleichbare Qualifikation, mehrjährige Erfahrung als Product Owner oder in ähnlicher IT-Rolle, agile Methoden wie Scrum/Kanban, starkes Prozessverständnis, strukturierte und kommunikative Arbeitsweise.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Verantwortet interne IT-Produkte und Tools, priorisiert das Product Backlog, strukturiert Anforderungen aus Fachbereichen und begleitet den gesamten Entwicklungsprozess von Konzeption bis Abnahme.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Reisen Aktuell GmbH</span>
-        <span class="pill">Koblenz</span>
-      </div>
-      <h2>Projektmanager (m/w/d) im Project Management Office</h2>
-      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Projektmanager-m-w-d-im-Project-Management-Office-Koblenz-Reisen-Aktuell-GmbH--13747604-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Reisen Aktuell ist ein inhabergeführter Reiseveranstalter aus Koblenz mit rund 300 Mitarbeitenden, flachen Hierarchien und Fokus auf Unternehmensentwicklung sowie moderne Arbeitsplätze.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Studium in Wirtschaft/Management oder vergleichbare Qualifikation, mehrjährige Projektmanagement-Erfahrung, Affinität zu Technik und Digitalisierung, Kenntnisse in klassischen und agilen PM-Methoden, starke Kommunikation und Organisation.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Leitet unternehmensübergreifende Projekte, plant Meilensteine, steuert Zeit/Budget/Qualität, analysiert Prozesse, identifiziert Optimierungspotenziale und agiert als Schnittstelle zwischen Geschäftsführung, Fachbereichen und Partnern.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Löwenstein Medical SE &amp; Co. KG</span>
-        <span class="pill">Bad Ems</span>
-      </div>
-      <h2>Mitarbeiter im Prozessmanagement (m/w/d)</h2>
-      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Mitarbeiter-im-Prozessmanagement-m-w-d-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753568-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Familiengeführtes Medizintechnik-Unternehmen in Bad Ems mit über 30 Jahren Erfahrung; zählt zu den führenden Anbietern in Klinik- und Homecare-Versorgung.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Kaufmännische Ausbildung oder wirtschaftsnahes Studium, analytische und lösungsorientierte Arbeitsweise, Kommunikations- und Teamfähigkeit, erste Erfahrung im Prozessmanagement wünschenswert, IT-Affinität und gute MS-Office-Kenntnisse.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Gestaltet Unternehmensprozesse mit, analysiert Prozesse, erarbeitet Optimierungsempfehlungen, dokumentiert Abläufe und fungiert als Schnittstelle zwischen operativen Einheiten und internem IT-Dienstleister.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">BWI GmbH</span>
-        <span class="pill">Bonn</span>
-      </div>
-      <h2>Projektmanager Digitalisierung (m/w/d)</h2>
-      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Projektmanager-Digitalisierung-m-w-d-Bonn-BWI-GmbH--13801177-inline.html?rltr=25_25_25_seorl_r_0_0_0_0_1_0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>BWI ist der primäre Digitalisierungspartner der Bundeswehr und betreibt mit über 8.000 Mitarbeitenden eine der größten und komplexesten IT-Infrastrukturen Deutschlands.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Studium der (Wirtschafts-)Informatik oder vergleichbar, mindestens 2 Jahre einschlägige PM-Erfahrung, PMI/IPMA-Zertifizierung, idealerweise Scrum-/PO-Zertifizierung, Erfahrung in Software-, Telekommunikations- oder Security-Projekten, sehr gute Deutschkenntnisse.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Leitet kleinere bis mittlere Digitalisierungsprojekte oder Teilprojekte, übersetzt Kundenanforderungen in IT-Lösungen, steuert Mitarbeitende und Lieferanten, managt Qualität, Risiken und Abhängigkeiten.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
-        <span class="pill">Boppard-Buchholz</span>
-      </div>
-      <h2>Director Product Development (m/w/d)</h2>
-      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Director-Product-Development-m-w-d-Boppard-Buchholz-Ehrhardt-Partner-Group--12945483-inline.html?rltr=5_5_25_seorl_m_1_0_0_0_0_0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>EPG ist ein international führender Anbieter einer Supply Chain Execution Suite (EPG ONE) mit über 1.600 Kunden und Lösungen für WMS, WCS, WFM, TMS und Voice.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Studium in Informatik/Wirtschaftsinformatik oder ähnlich, langjährige Erfahrung in der Softwareproduktentwicklung, idealerweise Logistiksoftware/TMS, Führungserfahrung, Know-how in Architektur, Cloud/SaaS, agilen Methoden sowie Deutsch und Englisch.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Führt die Abteilung Product Development fachlich und disziplinarisch, verantwortet die strategische und technische Weiterentwicklung des Transportmanagementsystems und definiert Roadmaps, Standards sowie Ressourcenplanung.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
-        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
-      </div>
-      <h2>Application Consultant (m/w/d)</h2>
-      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/e631a6d728d415449ca897c35508b463208293660" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>EPG ist international im Bereich Supply Chain Execution Software aktiv und wirbt mit Entwicklungsperspektiven, mehreren Standorten und über 1.000 Mitarbeitenden.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Die öffentlich sichtbare Seite zeigt vor allem Themen-Keywords statt eines Vollprofils; erkennbar sind IT-, Projektmanagement- und Implementierungsbezug.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Beraterrolle im EPG-Umfeld mit Schwerpunkt Application Consulting; die öffentlich zugängliche Seite nennt vor allem die Themen IT, Projektmanagement und Implementierung.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
-        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
-      </div>
-      <h2>Director EPG Academy (m/w/d)</h2>
-      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/e786a5e51c61e042cadf52fa752e929527565efb0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>EPG positioniert sich als internationaler Anbieter von Supply-Chain-Software mit mehreren Standorten, mehr als 1.000 Mitarbeitenden und eigener Academy.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Die zugängliche Stellen-Seite zeigt die Schwerpunktbegriffe Schulungsbetrieb, Teamführung und Konzeptentwicklung; ein detailliertes Anforderungsprofil war öffentlich nicht vollständig lesbar.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Leitungsrolle für die EPG Academy mit Fokus auf Trainingsbetrieb, Führung und Weiterentwicklung von Schulungskonzepten.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
-        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
-      </div>
-      <h2>Team Lead Customer Projects (m/w/d)</h2>
-      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/8bc82308c932aa595d535398a5443356f3d793ad0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>EPG bietet Logistik- und Supply-Chain-Software und hebt internationales Teamwork, flexible Arbeitszeiten und Entwicklungsperspektiven hervor.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Die öffentlich sichtbare Seite nennt Teamführung, Projektmanagement und Logistiksoftware als Kernthemen; weitere Anforderungen waren ohne vollständige Seitendarstellung nicht eindeutig einsehbar.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Führungsrolle im Kundenprojektgeschäft mit Fokus auf Projektsteuerung und Logistiksoftware im EPG-Umfeld.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
-        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
-      </div>
-      <h2>Software Trainer (m/w/d)</h2>
-      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/0896693d59f29f53ffaf1888858d26c0e4a8f1c20" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>EPG wirbt mit einer zukunftsorientierten Logistikbranche, internationaler Zusammenarbeit und Entwicklungsangeboten am Standort Boppard.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Öffentlich sichtbar sind die Schwerpunkte Kundenschulungen, Mitarbeitertraining und Konzeptentwicklung; ein vollständiges Profil war in der abrufbaren Version nicht enthalten.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Trainingsrolle mit Fokus auf Schulungskonzepte sowie Kunden- und Mitarbeiterschulungen für EPG-Software.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">Debeka</span>
-        <span class="pill">Koblenz</span>
-      </div>
-      <h2>Business Analyst – Anforderungsmanagement (w/m/d)</h2>
-      <p class="link"><a href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere/job/Business-Analyst---Anforderungsmanagement--w-m-d-_JR11066" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Debeka zählt zu den Top Five der Versicherungs- und Bausparbranche in Deutschland und nennt rund 16.000 Mitarbeitende sowie mehr als 7,5 Millionen betreute Menschen.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Ausbildung oder Studium mit IT-Bezug, sicherer Umgang mit Jira, Confluence und M365, Methoden der Anforderungsanalyse, Kenntnisse in agilen und klassischen Vorgehensmodellen, Verständnis für IT-Architekturen und regulatorische Anforderungen von Vorteil.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Baut ein strukturiertes, bereichsübergreifendes Anforderungsmanagement auf, pflegt Backlogs, analysiert Anforderungen per Workshops/Interviews, priorisiert Themen und unterstützt Change-Management sowie Traceability bis zur Auslieferung.</p>
-        </div>
-      </div>
-    </article>
-<article class="card">
-      <div class="meta">
-        <span class="pill">SHD Solutions GmbH</span>
-        <span class="pill">Andernach</span>
-      </div>
-      <h2>HR Specialist Organisationsentwicklung (m/w/d)</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=99cad252ec47e65d&amp;from=shareddesktop_copy" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>SHD Solutions sucht für Andernach eine Rolle an der Schnittstelle aus Organisationsentwicklung, Prozessdenken und HR-Systemen; laut Anzeige mit hybridem Arbeiten und mehreren Benefits.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Job-Anforderungen</h3>
-          <p>Erste HR-Erfahrung und Berührung mit Organisationsentwicklung, Interesse an strukturellen Fragestellungen, starke analytische und kommunikative Fähigkeiten, fließendes Deutsch und Englisch sowie ausgeprägte Excel- und Systemaffinität.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Unterstützt internationale Organisations- und Reorganisationsprojekte, pflegt Organigramme und Rollenprofile, koordiniert Abstimmungen, begleitet Change-Maßnahmen und arbeitet an Impact-Analysen.</p>
-        </div>
-      </div>
-    </article>
-    </main>
-
-    
-
-<section class="cards" id="neu-gefunden" style="margin-top: 28px;">
-  <article class="card" style="border-style: dashed;">
-    <div class="meta">
-      <span class="pill">3 ausgewählte Ergänzungen</span>
-      <span class="pill">nach deinem Feedback bereinigt</span>
-    </div>
-    <h2>Beibehaltene zusätzliche Stellen</h2>
-    <p class="subtitle" style="margin:0; color: var(--muted);">
-      Alle unpassenden Ergänzungen wurden entfernt. Übrig bleiben nur die drei von dir genannten Rollen.
-    </p>
-  </article>
-  <article class="card">
-      <div class="meta">
-        <span class="pill">nicht im Snippet klar benannt</span>
-        <span class="pill">Montabaur</span>
-        <span class="pill">Regional</span>
-        <span class="pill new-pill">Neu ergänzt</span>
-      </div>
-      <h2>Kundenberater / Projektmanager (m/w/d)</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=d68af95f8c1a82e7" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Rolle für Online-Incentive-Portale mit enger Zusammenarbeit zwischen Beratung, IT-Entwicklung, Prämienmanagement und Warenwirtschaft.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Warum passend zu deinem Lebenslauf</h3>
-          <p>Spannend, wenn du Kundenschnittstelle, Projektsteuerung und Portal-Weiterentwicklung kombinieren willst.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Beratung namhafter Kunden für Online-Portale, Weiterentwicklung der Portale und enge Abstimmung mit IT und Kundenmanagement.</p>
-        </div>
-      </div>
-    </article><article class="card">
-      <div class="meta">
-        <span class="pill">Etteplan</span>
-        <span class="pill">Koblenz</span>
-        <span class="pill">20–25 km Region</span>
-        <span class="pill new-pill">Neu ergänzt</span>
-      </div>
-      <h2>Projektmanager (m/w/d) Bereich Defense</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=8f52aa97c2215636" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Etteplan sucht in Koblenz Projektmanager:innen für komplexe Kundenprojekte mit Schwerpunkt Bundeswehr/Defense.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Warum passend zu deinem Lebenslauf</h3>
-          <p>Gut geeignet für dich, wenn du komplexe technische Programme und anspruchsvolle Stakeholder in einem regulierten Umfeld steuern möchtest.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Projektmanagement-Rolle für komplexe Defense-Projekte mit hohem Koordinations- und Umsetzungsanteil.</p>
-        </div>
-      </div>
-    </article><article class="card">
-      <div class="meta">
-        <span class="pill">Ergon International GmbH / RTI Sports GmbH</span>
-        <span class="pill">Koblenz</span>
-        <span class="pill">20–25 km Region</span>
-        <span class="pill new-pill">Neu ergänzt</span>
-      </div>
-      <h2>Projektmanager (m/w/d)</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=696d555088478868" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Ergon entwickelt ergonomische Fahrradkomponenten; die Stelle sitzt in Koblenz und verbindet Entwicklung, Organisation und Strategie in einem produktnahen Umfeld.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Warum passend zu deinem Lebenslauf</h3>
-          <p>Passend wegen Projektsteuerung, Zusammenarbeit mit Geschäftsleitung, Prozessverbesserung und Stakeholderführung; Mobility-/Produktbezug ist ein Plus.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Ganzheitliche Projektsteuerung vom Kick-off bis zur Serienproduktion, Weiterentwicklung der PM-Prozesse sowie Mitarbeit am Projektportfolio und strategischen Entscheidungen.</p>
-        </div>
-      </div>
-    </article><article class="card">
-      <div class="meta">
-        <span class="pill">öffentlicher Arbeitgeber / Bildungsportal</span>
-        <span class="pill">Koblenz</span>
-        <span class="pill">20–25 km Region</span>
-        <span class="pill new-pill">Neu ergänzt</span>
-      </div>
-      <h2>Managerin/Manager IT-Betriebssteuerung – Bildungsportal (m/w/d)</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=eb8f50c175dff309" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Rolle im Umfeld Plattformbetrieb und IT-Steuerung mit Fokus auf Netzwerkinfrastruktur, Cloud, Software und Zusammenarbeit mit Product Ownern.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Warum passend zu deinem Lebenslauf</h3>
-          <p>Sehr passend zu deinem Profil aus Prozessoptimierung, technischer Koordination und agiler/ITIL-naher Steuerung.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Steuert den Betrieb eines Bildungsportals, plant neue Dienste, evaluiert Technologien und koordiniert technische Schnittstellen statt operativer Administration.</p>
-        </div>
-      </div>
-    </article><article class="card">
-      <div class="meta">
-        <span class="pill">Masa GmbH</span>
-        <span class="pill">Andernach</span>
-        <span class="pill">Regional</span>
-        <span class="pill new-pill">Neu ergänzt</span>
-      </div>
-      <h2>Customer Success Manager – Digitale Produkte & Kundenportal (m/w/d)</h2>
-      <p class="link"><a href="https://de.indeed.com/viewjob?jk=ed7a4c036ce2a44c" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
-      <div class="section">
-        <h3>Unternehmen</h3>
-        <p>Masa ist seit 1905 im Maschinenbau aktiv und bezeichnet sich als weltweit führend in der Baustoffindustrie; die Rolle sitzt in Andernach und verbindet digitale Produkte mit After-Sales-Prozessen.</p>
-      </div>
-      <div class="grid">
-        <div class="section">
-          <h3>Warum passend zu deinem Lebenslauf</h3>
-          <p>Kein klassischer Product-Owner-Titel, aber ein sehr guter Alternativ-Fit zu deinem Lebenslauf: digitale Produkte, Nutzungsdaten, Anforderungen, Prozess-/Projektmanagement und enge Zusammenarbeit mit Produktmanagement und Entwicklung.</p>
-        </div>
-        <div class="section">
-          <h3>Stellenbeschreibung</h3>
-          <p>Begleitet Kunden im Portal über den gesamten Produktlebenszyklus, analysiert Nutzungsmuster, übersetzt Kundenbedürfnisse in Anforderungen und treibt digitale Verbesserungsinitiativen voran.</p>
-        </div>
-      </div>
-    </article>
-</section>
+<h1>Job Links</h1>
 
 
-  </div>
-</body>
-</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="job" href="https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html" target="_blank"><div class="titleline"><span class="num">01.</span><div class="title">Product Owner (m/w/d)</div></div><div class="meta">Reisen Aktuell GmbH – Koblenz</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Projektmanager-m-w-d-im-Project-Management-Office-Koblenz-Reisen-Aktuell-GmbH--13747604-inline.html" target="_blank"><div class="titleline"><span class="num">02.</span><div class="title">Projektmanager PMO (m/w/d)</div></div><div class="meta">Reisen Aktuell GmbH – Koblenz</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Mitarbeiter-im-Prozessmanagement-m-w-d-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753568-inline.html" target="_blank"><div class="titleline"><span class="num">03.</span><div class="title">Mitarbeiter Prozessmanagement (m/w/d)</div></div><div class="meta">Löwenstein Medical – Bad Ems</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Projektmanager-Digitalisierung-m-w-d-Bonn-BWI-GmbH--13801177-inline.html" target="_blank"><div class="titleline"><span class="num">04.</span><div class="title">Projektmanager Digitalisierung (m/w/d)</div></div><div class="meta">BWI GmbH – Bonn</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Director-Product-Development-m-w-d-Boppard-Buchholz-Ehrhardt-Partner-Group--12945483-inline.html" target="_blank"><div class="titleline"><span class="num">05.</span><div class="title">Director Product Development</div></div><div class="meta">EPG – Boppard</div></a><a class="job" href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere/job/Business-Analyst---Anforderungsmanagement--w-m-d-_JR11066" target="_blank"><div class="titleline"><span class="num">06.</span><div class="title">Business Analyst (w/m/d)</div></div><div class="meta">Debeka – Koblenz</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=696d555088478868" target="_blank"><div class="titleline"><span class="num">07.</span><div class="title">Projektmanager (m/w/d)</div></div><div class="meta">Ergon / RTI Sports – Koblenz</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=eb8f50c175dff309" target="_blank"><div class="titleline"><span class="num">08.</span><div class="title">IT-Betriebssteuerung Manager (m/w/d)</div></div><div class="meta">Öffentlicher Dienst – Koblenz</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=ed7a4c036ce2a44c" target="_blank"><div class="titleline"><span class="num">09.</span><div class="title">Customer Success Manager (m/w/d)</div></div><div class="meta">Masa GmbH – Andernach</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=c1de4ed686b0d0a3" target="_blank"><div class="titleline"><span class="num">10.</span><div class="title">Product Manager (m/w/d)</div></div><div class="meta">Unbekannt – Koblenz</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=63c5fc889f4c76c7" target="_blank"><div class="titleline"><span class="num">11.</span><div class="title">Administrative Stelle (m/w/d)</div></div><div class="meta">Unbekannt – Koblenz</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Senior-Projekt-Manager-m-w-d-Individualsoftware-Projekte-Bonn-Berlin-Karlsruhe-Mainz-Stuttgart-conet-Deutschland-GmbH--13635216-inline.html" target="_blank"><div class="titleline"><span class="num">12.</span><div class="title">Senior Projektmanager (m/w/d)</div></div><div class="meta">CONET – Bonn / Remote</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Requirements-Engineer-all-genders-Augsburg-Karlsruhe-Koblenz-Muenchen-Nuernberg-Saarbruecken-Stuttgart-Ulm-Walldorf-adesso-SE--13683934-inline.html" target="_blank"><div class="titleline"><span class="num">13.</span><div class="title">Requirements Engineer</div></div><div class="meta">adesso SE – Koblenz / Remote</div></a><a class="job" href="https://www.stepstone.de/stellenangebote--Projektmanager-in-im-Project-Management-Office-m-w-d-Nassau-LEIFHEIT-AG--13793707-inline.html" target="_blank"><div class="titleline"><span class="num">14.</span><div class="title">Projektmanager PMO (m/w/d)</div></div><div class="meta">Leifheit AG – Nassau</div></a><a class="job" href="https://www.arbeitsagentur.de/jobsuche/jobdetail/15753-TQRRHKHWRcvyyo-S" target="_blank"><div class="titleline"><span class="num">15.</span><div class="title">IT-Projektmanager (m/w/d)</div></div><div class="meta">Bundesagentur für Arbeit – Deutschland</div></a><a class="job" href="https://www.workwise.io/job/119680" target="_blank"><div class="titleline"><span class="num">16.</span><div class="title">Product Owner (m/w/d)</div></div><div class="meta">VGL Publishing AG – Berlin / Homeoffice 1–5 Tage</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=a1bcfd9906ba6b73" target="_blank"><div class="titleline"><span class="num">17.</span><div class="title">IT-Projektmanager (m/w/d) – Remote | MarTech | Agil</div></div><div class="meta">PX Consulting GmbH – Deutschland / Homeoffice</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=982709decea2f2bb" target="_blank"><div class="titleline"><span class="num">18.</span><div class="title">Senior IT Projektmanager (m/w/d)</div></div><div class="meta">elio GmbH – Home Office</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=90f39960f2a92d23" target="_blank"><div class="titleline"><span class="num">19.</span><div class="title">IT-Projektmanager &amp; Consultant (m/w/d)</div></div><div class="meta">BITS GmbH – München</div></a><a class="job" href="https://de.indeed.com/viewjob?jk=b2db3d0ed2cb2feb" target="_blank"><div class="titleline"><span class="num">20.</span><div class="title">IT Projektmanager Digitalisierung und Transformation (m/w/d)</div></div><div class="meta">MAT3 – Berlin / teils remote</div></a></body></html>
