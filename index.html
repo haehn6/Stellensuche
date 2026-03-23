@@ -1,875 +1,474 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stellenübersicht — Mario · März 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg:#F5F3EE; --surface:#FFFFFF; --surface2:#EFEDE8; --border:#DDD9D0;
-  --text:#1A1916; --text2:#6B6760; --text3:#9E9B96;
-  --accent:#2C2C2A;
-  --green:#2D6A4F; --green-bg:#D8F3DC;
-  --blue:#1A3A5C; --blue-bg:#E3EEF9;
-  --amber:#7C5C0A; --amber-bg:#FFF3CD;
-  --purple:#4C1D95; --purple-bg:#EDE9FE;
-  --teal:#0F6E56; --teal-bg:#E1F5EE;
-  --r:10px; --rs:6px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-
-/* Header */
-.header{background:var(--accent);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-end;}
-.header-left h1{font-family:'DM Serif Display',serif;color:#fff;font-size:22px;font-weight:400;}
-.header-left p{color:rgba(255,255,255,.5);font-size:13px;margin-top:4px;}
-.header-right{text-align:right;}
-.header-right .stat{color:#fff;font-size:13px;}
-.header-right .stat span{font-family:'DM Serif Display',serif;font-size:28px;display:block;line-height:1;}
-
-/* Profil-Chip */
-.profil-bar{background:#fff;border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.profil-label{font-size:12px;color:var(--text3);margin-right:4px;}
-.chip{font-size:12px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
-.chip.highlight{background:var(--accent);color:#fff;border-color:var(--accent);}
-
-/* Filter-Bar */
-.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.filter-label{font-size:12px;color:var(--text3);margin-right:2px;white-space:nowrap;}
-.fbtn{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
-.fbtn:hover{border-color:var(--accent);color:var(--text);}
-.fbtn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.fbtn.skill-active{background:var(--blue-bg);color:var(--blue);border-color:#b3d4f0;}
-.filter-sep{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0;}
-.counter-bar{padding:.5rem 2rem;font-size:12px;color:var(--text3);}
-
-/* Main */
-main{padding:1.5rem 2rem;max-width:1200px;margin:0 auto;}
-
-/* Job cards */
-.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:12px;transition:all .15s;}
-.job-card:hover{border-color:#888;box-shadow:0 2px 8px rgba(0,0,0,.08);}
-.job-card.hidden{display:none;}
-.job-card.top{border-left:3px solid var(--teal);}
-.job-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
-.job-left{flex:1;min-width:0;}
-.num{font-size:11px;font-weight:600;color:var(--text3);background:var(--surface2);border-radius:4px;padding:1px 6px;margin-right:6px;}
-.job-title{font-size:15px;font-weight:500;color:var(--text);}
-.job-company{font-size:13px;color:var(--text2);margin-top:3px;}
-.job-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap;}
-.bl{background:#EEEDFE;color:#534AB7;}
-.bh{background:var(--blue-bg);color:var(--blue);}
-.bg{background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
-.bt{background:var(--teal-bg);color:var(--teal);}
-.ba{background:var(--amber-bg);color:var(--amber);}
-
-/* Skills */
-.skills-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
-.skill{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--blue-bg);color:var(--blue);border:1px solid #c5dff5;cursor:pointer;transition:all .12s;}
-.skill:hover{background:#b3d4f0;}
-.skill.match{background:var(--teal-bg);color:var(--teal);border-color:#9fe1cb;}
-
-/* Right side */
-.job-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
-.job-dist{font-size:12px;color:var(--text3);text-align:right;}
-.job-link{font-size:12px;color:var(--blue);text-decoration:none;padding:6px 14px;border:1px solid #b3d4f0;border-radius:var(--rs);background:var(--blue-bg);white-space:nowrap;}
-.job-link:hover{background:#c8dff4;}
-.job-note{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.5;padding-top:8px;border-top:1px solid var(--border);}
-
-/* Section divider */
-.section-div{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:14px 0 8px;border-bottom:1px solid var(--border);margin-bottom:12px;margin-top:4px;}
-
-/* Footer */
-.footer{text-align:center;padding:2rem;font-size:12px;color:var(--text3);}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job-Übersicht</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg2: #121933;
+      --card: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.14);
+      --text: #eef2ff;
+      --muted: #b6c2e1;
+      --accent: #7dd3fc;
+      --accent2: #c084fc;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; background:
+      radial-gradient(circle at top left, rgba(125,211,252,.18), transparent 30%),
+      radial-gradient(circle at top right, rgba(192,132,252,.16), transparent 28%),
+      linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 40px 20px 56px; }
+    header {
+      margin-bottom: 28px; padding: 28px; border: 1px solid var(--line); border-radius: 24px;
+      background: rgba(255,255,255,0.05); backdrop-filter: blur(8px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+    }
+    h1 { margin: 0 0 10px; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; }
+    .subtitle { margin: 0; color: var(--muted); max-width: 900px; line-height: 1.6; }
+    .summary {
+      margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .summary .pill {
+      background: rgba(255,255,255,.08); color: var(--text); border: 1px solid var(--line);
+    }
+    .cards { display: grid; gap: 18px; }
+    .card {
+      border: 1px solid var(--line); border-radius: 22px; padding: 22px;
+      background: rgba(255,255,255,0.055); box-shadow: 0 16px 40px rgba(0,0,0,.16);
+    }
+    .card h2 { margin: 10px 0 8px; font-size: 1.45rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px; font-size: .92rem;
+      color: var(--accent); background: rgba(125,211,252,.08); border: 1px solid rgba(125,211,252,.22);
+    }
+    .new-pill { color: #d8b4fe; border-color: rgba(216,180,254,.28); background: rgba(216,180,254,.10); }
+    .link a {
+      color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3);
+    }
+    .link a:hover { color: var(--accent); }
+    .grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .section {
+      margin-top: 12px; padding: 16px; border-radius: 18px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+    }
+    .section h3 { margin: 0 0 10px; font-size: 1rem; color: var(--accent); }
+    .section p { margin: 0; color: var(--text); line-height: 1.65; }
+    footer {
+      margin-top: 28px; color: var(--muted); font-size: .95rem; line-height: 1.6;
+      border-top: 1px solid var(--line); padding-top: 18px;
+    }
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+      .container { padding: 24px 14px 40px; }
+      .card, header { border-radius: 18px; }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>Job-Übersicht als HTML-Webseite</h1>
+      <p class="subtitle">
+        Zusammenfassung der bereitgestellten Stellenanzeigen mit Direktlinks, Kurzprofil des Unternehmens,
+        kompakten Anforderungen und einer knappen Beschreibung der jeweiligen Rolle.
+      </p>
+      <div class="summary">
+        <span class="pill">20 Anzeigen insgesamt</span>
+        <span class="pill">Schwerpunkte: Product, Projektmanagement, Prozesse, HR</span>
+        <span class="pill">Quellen: Stepstone, EPG Jobs, Debeka, Indeed, SmartRecruiters</span>
+      </div>
+    </header>
 
-<div class="header">
-  <div class="header-left">
-    <h1>Stellenübersicht — Mario Hähn</h1>
-    <p>Engineering Lead · Product Owner · Projektmanager · Region Koblenz · März 2026</p>
+    <main class="cards">
+<article class="card">
+      <div class="meta">
+        <span class="pill">Reisen Aktuell GmbH</span>
+        <span class="pill">Koblenz</span>
+      </div>
+      <h2>Product Owner (m/w/d)</h2>
+      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Inhabergeführter Reiseveranstalter mit Sitz in Koblenz, gegründet 2010, rund 300 Mitarbeitende, Fokus auf günstige Qualitätsreisen und digitale Weiterentwicklung interner Systeme.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Studium/Ausbildung mit IT-Bezug oder vergleichbare Qualifikation, mehrjährige Erfahrung als Product Owner oder in ähnlicher IT-Rolle, agile Methoden wie Scrum/Kanban, starkes Prozessverständnis, strukturierte und kommunikative Arbeitsweise.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Verantwortet interne IT-Produkte und Tools, priorisiert das Product Backlog, strukturiert Anforderungen aus Fachbereichen und begleitet den gesamten Entwicklungsprozess von Konzeption bis Abnahme.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Reisen Aktuell GmbH</span>
+        <span class="pill">Koblenz</span>
+      </div>
+      <h2>Projektmanager (m/w/d) im Project Management Office</h2>
+      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Projektmanager-m-w-d-im-Project-Management-Office-Koblenz-Reisen-Aktuell-GmbH--13747604-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Reisen Aktuell ist ein inhabergeführter Reiseveranstalter aus Koblenz mit rund 300 Mitarbeitenden, flachen Hierarchien und Fokus auf Unternehmensentwicklung sowie moderne Arbeitsplätze.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Studium in Wirtschaft/Management oder vergleichbare Qualifikation, mehrjährige Projektmanagement-Erfahrung, Affinität zu Technik und Digitalisierung, Kenntnisse in klassischen und agilen PM-Methoden, starke Kommunikation und Organisation.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Leitet unternehmensübergreifende Projekte, plant Meilensteine, steuert Zeit/Budget/Qualität, analysiert Prozesse, identifiziert Optimierungspotenziale und agiert als Schnittstelle zwischen Geschäftsführung, Fachbereichen und Partnern.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Löwenstein Medical SE &amp; Co. KG</span>
+        <span class="pill">Bad Ems</span>
+      </div>
+      <h2>Mitarbeiter im Prozessmanagement (m/w/d)</h2>
+      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Mitarbeiter-im-Prozessmanagement-m-w-d-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753568-inline.html" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Familiengeführtes Medizintechnik-Unternehmen in Bad Ems mit über 30 Jahren Erfahrung; zählt zu den führenden Anbietern in Klinik- und Homecare-Versorgung.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Kaufmännische Ausbildung oder wirtschaftsnahes Studium, analytische und lösungsorientierte Arbeitsweise, Kommunikations- und Teamfähigkeit, erste Erfahrung im Prozessmanagement wünschenswert, IT-Affinität und gute MS-Office-Kenntnisse.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Gestaltet Unternehmensprozesse mit, analysiert Prozesse, erarbeitet Optimierungsempfehlungen, dokumentiert Abläufe und fungiert als Schnittstelle zwischen operativen Einheiten und internem IT-Dienstleister.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">BWI GmbH</span>
+        <span class="pill">Bonn</span>
+      </div>
+      <h2>Projektmanager Digitalisierung (m/w/d)</h2>
+      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Projektmanager-Digitalisierung-m-w-d-Bonn-BWI-GmbH--13801177-inline.html?rltr=25_25_25_seorl_r_0_0_0_0_1_0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>BWI ist der primäre Digitalisierungspartner der Bundeswehr und betreibt mit über 8.000 Mitarbeitenden eine der größten und komplexesten IT-Infrastrukturen Deutschlands.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Studium der (Wirtschafts-)Informatik oder vergleichbar, mindestens 2 Jahre einschlägige PM-Erfahrung, PMI/IPMA-Zertifizierung, idealerweise Scrum-/PO-Zertifizierung, Erfahrung in Software-, Telekommunikations- oder Security-Projekten, sehr gute Deutschkenntnisse.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Leitet kleinere bis mittlere Digitalisierungsprojekte oder Teilprojekte, übersetzt Kundenanforderungen in IT-Lösungen, steuert Mitarbeitende und Lieferanten, managt Qualität, Risiken und Abhängigkeiten.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
+        <span class="pill">Boppard-Buchholz</span>
+      </div>
+      <h2>Director Product Development (m/w/d)</h2>
+      <p class="link"><a href="https://www.stepstone.de/stellenangebote--Director-Product-Development-m-w-d-Boppard-Buchholz-Ehrhardt-Partner-Group--12945483-inline.html?rltr=5_5_25_seorl_m_1_0_0_0_0_0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>EPG ist ein international führender Anbieter einer Supply Chain Execution Suite (EPG ONE) mit über 1.600 Kunden und Lösungen für WMS, WCS, WFM, TMS und Voice.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Studium in Informatik/Wirtschaftsinformatik oder ähnlich, langjährige Erfahrung in der Softwareproduktentwicklung, idealerweise Logistiksoftware/TMS, Führungserfahrung, Know-how in Architektur, Cloud/SaaS, agilen Methoden sowie Deutsch und Englisch.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Führt die Abteilung Product Development fachlich und disziplinarisch, verantwortet die strategische und technische Weiterentwicklung des Transportmanagementsystems und definiert Roadmaps, Standards sowie Ressourcenplanung.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
+        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
+      </div>
+      <h2>Application Consultant (m/w/d)</h2>
+      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/e631a6d728d415449ca897c35508b463208293660" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>EPG ist international im Bereich Supply Chain Execution Software aktiv und wirbt mit Entwicklungsperspektiven, mehreren Standorten und über 1.000 Mitarbeitenden.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Die öffentlich sichtbare Seite zeigt vor allem Themen-Keywords statt eines Vollprofils; erkennbar sind IT-, Projektmanagement- und Implementierungsbezug.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Beraterrolle im EPG-Umfeld mit Schwerpunkt Application Consulting; die öffentlich zugängliche Seite nennt vor allem die Themen IT, Projektmanagement und Implementierung.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
+        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
+      </div>
+      <h2>Director EPG Academy (m/w/d)</h2>
+      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/e786a5e51c61e042cadf52fa752e929527565efb0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>EPG positioniert sich als internationaler Anbieter von Supply-Chain-Software mit mehreren Standorten, mehr als 1.000 Mitarbeitenden und eigener Academy.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Die zugängliche Stellen-Seite zeigt die Schwerpunktbegriffe Schulungsbetrieb, Teamführung und Konzeptentwicklung; ein detailliertes Anforderungsprofil war öffentlich nicht vollständig lesbar.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Leitungsrolle für die EPG Academy mit Fokus auf Trainingsbetrieb, Führung und Weiterentwicklung von Schulungskonzepten.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
+        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
+      </div>
+      <h2>Team Lead Customer Projects (m/w/d)</h2>
+      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/8bc82308c932aa595d535398a5443356f3d793ad0" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>EPG bietet Logistik- und Supply-Chain-Software und hebt internationales Teamwork, flexible Arbeitszeiten und Entwicklungsperspektiven hervor.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Die öffentlich sichtbare Seite nennt Teamführung, Projektmanagement und Logistiksoftware als Kernthemen; weitere Anforderungen waren ohne vollständige Seitendarstellung nicht eindeutig einsehbar.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Führungsrolle im Kundenprojektgeschäft mit Fokus auf Projektsteuerung und Logistiksoftware im EPG-Umfeld.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Ehrhardt + Partner Group (EPG)</span>
+        <span class="pill">Boppard (aus Seite nicht eindeutig, EPG-Hauptsitz genannt)</span>
+      </div>
+      <h2>Software Trainer (m/w/d)</h2>
+      <p class="link"><a href="https://jobs-ads.epg.com/jobposting/0896693d59f29f53ffaf1888858d26c0e4a8f1c20" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>EPG wirbt mit einer zukunftsorientierten Logistikbranche, internationaler Zusammenarbeit und Entwicklungsangeboten am Standort Boppard.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Öffentlich sichtbar sind die Schwerpunkte Kundenschulungen, Mitarbeitertraining und Konzeptentwicklung; ein vollständiges Profil war in der abrufbaren Version nicht enthalten.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Trainingsrolle mit Fokus auf Schulungskonzepte sowie Kunden- und Mitarbeiterschulungen für EPG-Software.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">Debeka</span>
+        <span class="pill">Koblenz</span>
+      </div>
+      <h2>Business Analyst – Anforderungsmanagement (w/m/d)</h2>
+      <p class="link"><a href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere/job/Business-Analyst---Anforderungsmanagement--w-m-d-_JR11066" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Debeka zählt zu den Top Five der Versicherungs- und Bausparbranche in Deutschland und nennt rund 16.000 Mitarbeitende sowie mehr als 7,5 Millionen betreute Menschen.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Ausbildung oder Studium mit IT-Bezug, sicherer Umgang mit Jira, Confluence und M365, Methoden der Anforderungsanalyse, Kenntnisse in agilen und klassischen Vorgehensmodellen, Verständnis für IT-Architekturen und regulatorische Anforderungen von Vorteil.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Baut ein strukturiertes, bereichsübergreifendes Anforderungsmanagement auf, pflegt Backlogs, analysiert Anforderungen per Workshops/Interviews, priorisiert Themen und unterstützt Change-Management sowie Traceability bis zur Auslieferung.</p>
+        </div>
+      </div>
+    </article>
+<article class="card">
+      <div class="meta">
+        <span class="pill">SHD Solutions GmbH</span>
+        <span class="pill">Andernach</span>
+      </div>
+      <h2>HR Specialist Organisationsentwicklung (m/w/d)</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=99cad252ec47e65d&amp;from=shareddesktop_copy" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>SHD Solutions sucht für Andernach eine Rolle an der Schnittstelle aus Organisationsentwicklung, Prozessdenken und HR-Systemen; laut Anzeige mit hybridem Arbeiten und mehreren Benefits.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Job-Anforderungen</h3>
+          <p>Erste HR-Erfahrung und Berührung mit Organisationsentwicklung, Interesse an strukturellen Fragestellungen, starke analytische und kommunikative Fähigkeiten, fließendes Deutsch und Englisch sowie ausgeprägte Excel- und Systemaffinität.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Unterstützt internationale Organisations- und Reorganisationsprojekte, pflegt Organigramme und Rollenprofile, koordiniert Abstimmungen, begleitet Change-Maßnahmen und arbeitet an Impact-Analysen.</p>
+        </div>
+      </div>
+    </article>
+    </main>
+
+    
+
+<section class="cards" id="neu-gefunden" style="margin-top: 28px;">
+  <article class="card" style="border-style: dashed;">
+    <div class="meta">
+      <span class="pill">3 ausgewählte Ergänzungen</span>
+      <span class="pill">nach deinem Feedback bereinigt</span>
+    </div>
+    <h2>Beibehaltene zusätzliche Stellen</h2>
+    <p class="subtitle" style="margin:0; color: var(--muted);">
+      Alle unpassenden Ergänzungen wurden entfernt. Übrig bleiben nur die drei von dir genannten Rollen.
+    </p>
+  </article>
+  <article class="card">
+      <div class="meta">
+        <span class="pill">nicht im Snippet klar benannt</span>
+        <span class="pill">Montabaur</span>
+        <span class="pill">Regional</span>
+        <span class="pill new-pill">Neu ergänzt</span>
+      </div>
+      <h2>Kundenberater / Projektmanager (m/w/d)</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=d68af95f8c1a82e7" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Rolle für Online-Incentive-Portale mit enger Zusammenarbeit zwischen Beratung, IT-Entwicklung, Prämienmanagement und Warenwirtschaft.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Warum passend zu deinem Lebenslauf</h3>
+          <p>Spannend, wenn du Kundenschnittstelle, Projektsteuerung und Portal-Weiterentwicklung kombinieren willst.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Beratung namhafter Kunden für Online-Portale, Weiterentwicklung der Portale und enge Abstimmung mit IT und Kundenmanagement.</p>
+        </div>
+      </div>
+    </article><article class="card">
+      <div class="meta">
+        <span class="pill">Etteplan</span>
+        <span class="pill">Koblenz</span>
+        <span class="pill">20–25 km Region</span>
+        <span class="pill new-pill">Neu ergänzt</span>
+      </div>
+      <h2>Projektmanager (m/w/d) Bereich Defense</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=8f52aa97c2215636" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Etteplan sucht in Koblenz Projektmanager:innen für komplexe Kundenprojekte mit Schwerpunkt Bundeswehr/Defense.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Warum passend zu deinem Lebenslauf</h3>
+          <p>Gut geeignet für dich, wenn du komplexe technische Programme und anspruchsvolle Stakeholder in einem regulierten Umfeld steuern möchtest.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Projektmanagement-Rolle für komplexe Defense-Projekte mit hohem Koordinations- und Umsetzungsanteil.</p>
+        </div>
+      </div>
+    </article><article class="card">
+      <div class="meta">
+        <span class="pill">Ergon International GmbH / RTI Sports GmbH</span>
+        <span class="pill">Koblenz</span>
+        <span class="pill">20–25 km Region</span>
+        <span class="pill new-pill">Neu ergänzt</span>
+      </div>
+      <h2>Projektmanager (m/w/d)</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=696d555088478868" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Ergon entwickelt ergonomische Fahrradkomponenten; die Stelle sitzt in Koblenz und verbindet Entwicklung, Organisation und Strategie in einem produktnahen Umfeld.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Warum passend zu deinem Lebenslauf</h3>
+          <p>Passend wegen Projektsteuerung, Zusammenarbeit mit Geschäftsleitung, Prozessverbesserung und Stakeholderführung; Mobility-/Produktbezug ist ein Plus.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Ganzheitliche Projektsteuerung vom Kick-off bis zur Serienproduktion, Weiterentwicklung der PM-Prozesse sowie Mitarbeit am Projektportfolio und strategischen Entscheidungen.</p>
+        </div>
+      </div>
+    </article><article class="card">
+      <div class="meta">
+        <span class="pill">öffentlicher Arbeitgeber / Bildungsportal</span>
+        <span class="pill">Koblenz</span>
+        <span class="pill">20–25 km Region</span>
+        <span class="pill new-pill">Neu ergänzt</span>
+      </div>
+      <h2>Managerin/Manager IT-Betriebssteuerung – Bildungsportal (m/w/d)</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=eb8f50c175dff309" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Rolle im Umfeld Plattformbetrieb und IT-Steuerung mit Fokus auf Netzwerkinfrastruktur, Cloud, Software und Zusammenarbeit mit Product Ownern.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Warum passend zu deinem Lebenslauf</h3>
+          <p>Sehr passend zu deinem Profil aus Prozessoptimierung, technischer Koordination und agiler/ITIL-naher Steuerung.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Steuert den Betrieb eines Bildungsportals, plant neue Dienste, evaluiert Technologien und koordiniert technische Schnittstellen statt operativer Administration.</p>
+        </div>
+      </div>
+    </article><article class="card">
+      <div class="meta">
+        <span class="pill">Masa GmbH</span>
+        <span class="pill">Andernach</span>
+        <span class="pill">Regional</span>
+        <span class="pill new-pill">Neu ergänzt</span>
+      </div>
+      <h2>Customer Success Manager – Digitale Produkte & Kundenportal (m/w/d)</h2>
+      <p class="link"><a href="https://de.indeed.com/viewjob?jk=ed7a4c036ce2a44c" target="_blank" rel="noopener noreferrer">Original-Stellenanzeige öffnen</a></p>
+      <div class="section">
+        <h3>Unternehmen</h3>
+        <p>Masa ist seit 1905 im Maschinenbau aktiv und bezeichnet sich als weltweit führend in der Baustoffindustrie; die Rolle sitzt in Andernach und verbindet digitale Produkte mit After-Sales-Prozessen.</p>
+      </div>
+      <div class="grid">
+        <div class="section">
+          <h3>Warum passend zu deinem Lebenslauf</h3>
+          <p>Kein klassischer Product-Owner-Titel, aber ein sehr guter Alternativ-Fit zu deinem Lebenslauf: digitale Produkte, Nutzungsdaten, Anforderungen, Prozess-/Projektmanagement und enge Zusammenarbeit mit Produktmanagement und Entwicklung.</p>
+        </div>
+        <div class="section">
+          <h3>Stellenbeschreibung</h3>
+          <p>Begleitet Kunden im Portal über den gesamten Produktlebenszyklus, analysiert Nutzungsmuster, übersetzt Kundenbedürfnisse in Anforderungen und treibt digitale Verbesserungsinitiativen voran.</p>
+        </div>
+      </div>
+    </article>
+</section>
+
+
+    <footer>
+      Hinweis: Einige Anzeigen waren doppelt in der Liste enthalten und wurden zusammengeführt.
+      Bei einzelnen EPG- und Debeka/Indeed-Seiten war öffentlich nur ein Teil der Inhalte direkt zugänglich; in diesen Fällen basieren die Kurztexte auf den sichtbar abrufbaren Informationen. Die ergänzte Auswahl wurde nach deinem Feedback auf drei passende zusätzliche Stellen reduziert.
+    </footer>
   </div>
-  <div class="header-right">
-    <div class="stat"><span id="visCount">25</span> Stellen</div>
-  </div>
-</div>
-
-<div class="profil-bar">
-  <span class="profil-label">Profil-Skills:</span>
-  <span class="chip highlight">Scrum / Kanban</span>
-  <span class="chip highlight">Backlog & Anforderungen</span>
-  <span class="chip highlight">Teamführung 11–20 MA</span>
-  <span class="chip highlight">Jira / Confluence</span>
-  <span class="chip highlight">Roadmap-Planung</span>
-  <span class="chip highlight">Frontend / Web</span>
-  <span class="chip highlight">EAA / Barrierefreiheit</span>
-  <span class="chip highlight">Usability</span>
-  <span class="chip highlight">Recruiting</span>
-  <span class="chip">Verfügbar: sofort</span>
-  <span class="chip">Gehalt: 55–65k€</span>
-  <span class="chip">Region: Koblenz +30km</span>
-</div>
-
-<div class="filter-bar">
-  <span class="filter-label">Ort:</span>
-  <button class="fbtn active" onclick="filterOrt('alle',this)">Alle</button>
-  <button class="fbtn" onclick="filterOrt('koblenz',this)">Koblenz direkt</button>
-  <button class="fbtn" onclick="filterOrt('nah',this)">bis 20km</button>
-  <button class="fbtn" onclick="filterOrt('hybrid',this)">Homeoffice möglich</button>
-  <div class="filter-sep"></div>
-  <span class="filter-label">Rolle:</span>
-  <button class="fbtn active" onclick="filterRolle('alle',this)">Alle</button>
-  <button class="fbtn" onclick="filterRolle('po',this)">Product Owner</button>
-  <button class="fbtn" onclick="filterRolle('pm',this)">Projektmanager</button>
-  <button class="fbtn" onclick="filterRolle('lead',this)">Team Lead</button>
-  <button class="fbtn" onclick="filterRolle('prozess',this)">Prozessmanager</button>
-  <div class="filter-sep"></div>
-  <span class="filter-label">Skill gesucht:</span>
-  <button class="fbtn" onclick="filterSkill('Scrum',this)">Scrum</button>
-  <button class="fbtn" onclick="filterSkill('Agile',this)">Agile</button>
-  <button class="fbtn" onclick="filterSkill('Jira',this)">Jira</button>
-  <button class="fbtn" onclick="filterSkill('Backlog',this)">Backlog</button>
-  <button class="fbtn" onclick="filterSkill('Führung',this)">Führung</button>
-  <button class="fbtn" onclick="filterSkill('Krisensicher',this)">Krisensicher</button>
-</div>
-
-<div class="counter-bar" id="counterBar">25 von 25 Stellen angezeigt</div>
-
-<main>
-
-<div class="section-div">Koblenz — direkt vor Ort</div>
-
-<div class="job-card top" data-ort="koblenz" data-rolle="po" data-ho="1" data-skills="Scrum Kanban Backlog Agile Jira Produktmanagement Stakeholder">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">1</span>Product Owner (m/w/d)</div>
-      <div class="job-company">Reisen Aktuell GmbH — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Product Owner</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Scrum</span>
-        <span class="skill match">Kanban</span>
-        <span class="skill match">Backlog-Management</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill match">Stakeholder-Abstimmung</span>
-        <span class="skill">Produktmanagement</span>
-        <span class="skill">Dokumentation</span>
-      </div>
-      <div class="job-note">Ausbildung + Erfahrung als Alternative zum Studium explizit akzeptiert · 300 MA · inhabergeführt · 30 Urlaubstage · Fitnessstudio</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card top" data-ort="koblenz" data-rolle="po" data-ho="1" data-skills="Backlog Anforderungsmanagement Scrum Agile Führung Stakeholder Roadmap Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">2</span>Product Owner / Business Analyst (w/m/d)</div>
-      <div class="job-company">Debeka-Gruppe — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">bis 60% Homeoffice</span>
-        <span class="badge bg">Product Owner</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Backlog-Management</span>
-        <span class="skill match">Anforderungsanalyse</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Roadmap-Planung</span>
-        <span class="skill">IT-Kenntnisse</span>
-        <span class="skill">Versicherungs-IT</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">14 Monatsgehälter · Direktbewerbung über karriere.debeka.de bevorzugt · Scrum-Master-Förderung intern möglich</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere/job/Business-Analyst---Anforderungsmanagement--w-m-d-_JR11066" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digitalisierung Stakeholder Agile Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">3</span>Projektmanager Digitales Messwesen (m/w/d)</div>
-      <div class="job-company">Energieversorgung Mittelrhein (evm) — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektmanager</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Koordination</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill">Smart Metering</span>
-        <span class="skill">Energiewirtschaft</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">Top Company 2026 · 30 Urlaubstage · kommunaler Versorger · krisensicher</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://technischer-bereich-karriere.evm.de/" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="prozess" data-ho="1" data-skills="Prozessmanagement Digitalisierung IT Stakeholder Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">4</span>Prozessmanager IT (m/w/d)</div>
-      <div class="job-company">Energieversorgung Mittelrhein (evm) — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Prozessmanager</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Prozessoptimierung</span>
-        <span class="skill match">IT-Prozesse</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill match">Stakeholder-Abstimmung</span>
-        <span class="skill">Dokumentation</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">Zweite evm-Stelle — parallel zur PM-Stelle bewerben</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://de.indeed.com/q-evm-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="lead" data-ho="1" data-skills="Scrum Agile Führung Projektmanagement Jira">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">5</span>IT-Projektleiter / Agile Coach (m/w/d)</div>
-      <div class="job-company">IABG mbH — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Agile Coach</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Scrum</span>
-        <span class="skill match">Agile Coaching</span>
-        <span class="skill match">Projektleitung</span>
-        <span class="skill match">Jira</span>
-        <span class="skill match">Führung</span>
-        <span class="skill">IT-Beratung</span>
-      </div>
-      <div class="job-note">Flexible Rolle als PL, SM oder PO je nach Projekt · Hinweis: Bundeswehr-nahes Umfeld</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Frontend Digitalisierung Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">6</span>Technische/r Projektleiter/in Software (m/w/d)</div>
-      <div class="job-company">Pädagogisches Landesinstitut RLP — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektleiter</span>
-        <span class="badge bg">Öffentlicher Dienst</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Frontend-Know-how</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill">Bildungs-IT</span>
-        <span class="skill">TV-L EG 11</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">TV-L EG 11 · unbefristet · eSchule-Portale · Frontend-Erfahrung direkt gefragt</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="prozess" data-ho="1" data-skills="Prozessmanagement Digitalisierung IT Stakeholder Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">7</span>IT-Prozessmanager / Digitalisierungsbeauftragter (m/w/d)</div>
-      <div class="job-company">Gemeinschaftsklinikum Mittelrhein — Koblenz / Mayen / Boppard</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Prozessmanager</span>
-        <span class="badge bg">Neu</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Prozessoptimierung</span>
-        <span class="skill match">IT-Projektmanagement</span>
-        <span class="skill match">Stakeholder-Abstimmung</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill">Krankenhaus-IT</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">Klinikverbund, 3 Standorte · krisensicher · EAA-Know-how relevant für Patientenportale</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://www.gk.de/beruf-und-karriere/aktuelle-stellenangebote" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Frontend Digitalisierung Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">8</span>Projektmitarbeiterin/in Digitale Kommunikation (m/w/d)</div>
-      <div class="job-company">Universität Koblenz (ZFUW) — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Digitalprojekte</span>
-        <span class="badge bg">Öffentlicher Dienst</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Digitale Kommunikation</span>
-        <span class="skill match">Projektkoordination</span>
-        <span class="skill match">Web / Online-Produkte</span>
-        <span class="skill">Marketing-IT</span>
-        <span class="skill">TV-L EG 11</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">TV-L EG 11 · unbefristet · Berufserfahrung als Alternative akzeptiert</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="section-div">Umkreis Koblenz — 10 bis 25km</div>
-
-<div class="job-card top" data-ort="nah" data-rolle="lead" data-ho="1" data-skills="Scrum Agile Kanban Führung Jira">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">9</span>Scrum Master (m/w/d)</div>
-      <div class="job-company">MEBEDO GmbH — Urmitz (~10km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Urmitz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Scrum Master</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Scrum</span>
-        <span class="skill match">Kanban</span>
-        <span class="skill match">Agile Coaching</span>
-        <span class="skill match">Sprint-Planung</span>
-        <span class="skill match">Jira</span>
-        <span class="skill">Servant Leadership</span>
-        <span class="skill">Teamentwicklung</span>
-      </div>
-      <div class="job-note">Softwareprodukt ELEKTROMANAGER · keine Reisetätigkeit · kurze Entscheidungswege</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~10km · Urmitz</div>
-      <a class="job-link" href="https://www.stepstone.de/jobs/scrum-master/in-koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Jira Agile">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">10</span>Projektmanager (m/w/d)</div>
-      <div class="job-company">SHD Solutions GmbH — Andernach (~15km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Andernach</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektmanager</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Führung</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill match">Jira</span>
-        <span class="skill">ERP-Systeme</span>
-        <span class="skill">Kundenprojekte</span>
-      </div>
-      <div class="job-note">IT-Marktführer Möbel-/Küchenbranche · 500+ MA · Jobrad · Essenszuschuss</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~15km · Andernach</div>
-      <a class="job-link" href="https://de.indeed.com/q-shd-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Usability Stakeholder Web Digital">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">11</span>Senior Product Specialist (m/w/d)</div>
-      <div class="job-company">SHD Solutions GmbH — Andernach (~15km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Andernach</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Produktmanager</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Produktmanagement</span>
-        <span class="skill match">Usability</span>
-        <span class="skill match">Stakeholder-Abstimmung</span>
-        <span class="skill match">Anforderungsanalyse</span>
-        <span class="skill">Product Marketing</span>
-        <span class="skill">Wettbewerbsanalyse</span>
-      </div>
-      <div class="job-note">Parallel zur PM-Stelle bewerben · Kundenbedürfnisse in Produktentwicklung übersetzen</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~15km · Andernach</div>
-      <a class="job-link" href="https://de.indeed.com/q-shd-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digital KI Stakeholder Führung Anforderungsmanagement">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">12</span>Projektleiter Strategieprojekte Digital & KI (m/w/d)</div>
-      <div class="job-company">Lohmann & Rauscher GmbH — Rengsdorf (~20km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Rengsdorf</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektleiter Digital</span>
-        <span class="badge bg">Neu</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Anforderungsmanagement</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Führung</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill">KI-Projekte</span>
-        <span class="skill">Medizintechnik-Kontext</span>
-      </div>
-      <div class="job-note">5.700+ MA weltweit · Anforderungen in technische Konzepte übersetzen = exakter Profil-Match</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~20km · Rengsdorf</div>
-      <a class="job-link" href="https://www.stepstone.de/cmp/de/lohmann-rauscher-gmbh-co-kg-43241/jobs" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digital KI Stakeholder Führung">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">13</span>Projektmanager Digital & KI (m/w/d)</div>
-      <div class="job-company">Lohmann & Rauscher GmbH — Rengsdorf (~20km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Rengsdorf</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektmanager</span>
-        <span class="badge bg">Neu</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Koordination</span>
-        <span class="skill match">Digitalisierung</span>
-        <span class="skill">KI-Projekte</span>
-        <span class="skill">Prozessgestaltung</span>
-      </div>
-      <div class="job-note">Parallel zur Projektleiter-Stelle bewerben · direkter Kontakt über lohmann-rauscher.com/karriere</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~20km · Rengsdorf</div>
-      <a class="job-link" href="https://de.indeed.com/q-lohmann-rauscher-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Kundenprojekte Agile">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">14</span>Projektleiter Logistik (m/w/d)</div>
-      <div class="job-company">Ehrhardt + Partner Group (EPG) — Boppard (~20km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Boppard</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Projektleiter</span>
-        <span class="badge bg">Neu</span>
-        <span class="badge bt">Top-Empfehlung</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Führung</span>
-        <span class="skill match">Kundenprojekte</span>
-        <span class="skill">Logistik-Software</span>
-        <span class="skill">Kick-off bis Go-Live</span>
-        <span class="skill">Reisebereitschaft</span>
-      </div>
-      <div class="job-note">Weltmarktführer Lagerführungssoftware · Reisebereitschaft national erforderlich · direkte Stelle verifiziert</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~20km · Boppard</div>
-      <a class="job-link" href="https://jobs-ads.epg.com/jobposting/d7b0492349721c9d082da6f9adfe54fe368cfc2a" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement IT-Beratung Stakeholder Prozessoptimierung">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">15</span>IT-Projektleiter / Consultant (m/w/d)</div>
-      <div class="job-company">Ehrhardt + Partner Group (EPG) — Boppard (~20km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Boppard</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">IT-Consultant</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Abstimmung</span>
-        <span class="skill match">Prozessoptimierung</span>
-        <span class="skill">IT-Beratung</span>
-        <span class="skill">Logistik-Kontext</span>
-        <span class="skill">Reisebereitschaft</span>
-      </div>
-      <div class="job-note">Parallel zur Projektleiter-Stelle bewerben</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~20km · Boppard</div>
-      <a class="job-link" href="https://www.epg-jobs.com/de/stellenangebote" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement E-Commerce Prozessoptimierung Web Digital Usability">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">16</span>Produkt- und Prozessmanager (m/w/d) Onlineshop</div>
-      <div class="job-company">Löwenstein Medical SE & Co. KG — Bad Ems (~15km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Bad Ems</span>
-        <span class="badge bg">Produktmanager</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Produktmanagement</span>
-        <span class="skill match">E-Commerce</span>
-        <span class="skill match">Prozessgestaltung</span>
-        <span class="skill match">Usability</span>
-        <span class="skill match">Anforderungsanalyse</span>
-        <span class="skill">Sortimentsmanagement</span>
-        <span class="skill">Shopware</span>
-      </div>
-      <div class="job-note">Ausbildung + Erfahrung akzeptiert · neuer Onlineshop · EAA-Know-how direkter Mehrwert</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~15km · Bad Ems</div>
-      <a class="job-link" href="https://www.stepstone.de/stellenangebote--Produkt-und-Prozessmanager-m-w-d-fuer-medizinische-Verbrauchsprodukte-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753233-inline.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="po" data-ho="1" data-skills="Product Owner Backlog Scrum Agile Roadmap KI Stakeholder">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">17</span>AI Product Owner (w/m/d)</div>
-      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Montabaur</span>
-        <span class="badge bh">bis 40% Homeoffice</span>
-        <span class="badge bg">Product Owner</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Backlog-Management</span>
-        <span class="skill match">Scrum</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill match">Roadmap-Planung</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill">KI-Produkte</span>
-        <span class="skill">CRM-Systeme</span>
-        <span class="skill">Prompt Engineering</span>
-      </div>
-      <div class="job-note">Anspruchsvoll — aber Praxiserfahrung zählt mehr als Zertifikate</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~25km · Montabaur</div>
-      <a class="job-link" href="https://www.stepstone.de/stellenangebote--AI-Product-Owner-w-m-d-Montabaur-11--13741505-inline.html" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Roadmap Stakeholder Agile B2B">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">18</span>Product Manager B2B Broadband (m/w/d)</div>
-      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Montabaur</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Produktmanager</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Produktmanagement</span>
-        <span class="skill match">Roadmap-Planung</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill">B2B-Portfolio</span>
-        <span class="skill">Telekommunikation</span>
-        <span class="skill">Go-to-Market</span>
-      </div>
-      <div class="job-note">Alle 1&1-Stellen mit einer Bewerbung abdecken</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~25km · Montabaur</div>
-      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Roadmap Stakeholder Agile B2B Mobile">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">19</span>Product Manager B2B Mobile (m/w/d)</div>
-      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Montabaur</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Produktmanager</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Produktmanagement</span>
-        <span class="skill match">Roadmap-Planung</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill">B2B Mobile</span>
-        <span class="skill">Telekommunikation</span>
-      </div>
-      <div class="job-note">Parallel zu allen anderen 1&1-Stellen bewerben</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~25km · Montabaur</div>
-      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="lead" data-ho="1" data-skills="Führung Produktmanagement Roadmap Stakeholder B2B Agile">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">20</span>Head of Product Management & Digital B2B (m/w/d)</div>
-      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
-      <div class="job-meta">
-        <span class="badge bl">Montabaur</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Führungsrolle</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Führung 20+ MA</span>
-        <span class="skill match">Produktstrategie</span>
-        <span class="skill match">Roadmap-Planung</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill">B2B-Portfolio</span>
-        <span class="skill">Go-to-Market</span>
-        <span class="skill">P&L-Verantwortung</span>
-      </div>
-      <div class="job-note">Über Gehaltsband · aber Führungserfahrung 20+ MA macht dich zum starken Kandidaten</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">~25km · Montabaur</div>
-      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Agile Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">21</span>IT-Projektmanager (m/w/d)</div>
-      <div class="job-company">BWI GmbH — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">IT-Projektmanager</span>
-        <span class="badge ba">Achtung: Bundeswehr-nah</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Agile Methoden</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Führung</span>
-        <span class="skill">Bundeswehr-IT</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">Bundesgesellschaft · krisensicher · Hinweis: IT-Infrastruktur-Anteile möglich</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://www.bwi.de/karriere/stellenangebote" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement PMO Agile Stakeholder Krisensicher">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">22</span>IT-Projektmanager PMO (m/w/d)</div>
-      <div class="job-company">BWI GmbH — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">PMO</span>
-        <span class="badge ba">Achtung: Bundeswehr-nah</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">PMO</span>
-        <span class="skill match">Agile Integration</span>
-        <span class="skill match">Projektmethoden</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill">Krisensicher</span>
-      </div>
-      <div class="job-note">Parallel zur PM-Stelle bewerben · PMO-Methodenentwicklung</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://www.bwi.de/karriere/stellenangebote" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Produktmanagement Stakeholder Thales">
-  <div class="job-top">
-    <div class="job-left">
-      <div class="job-title"><span class="num">23</span>IT-Produktmanager / Projektleiter (m/w/d)</div>
-      <div class="job-company">Thales Deutschland GmbH — Koblenz</div>
-      <div class="job-meta">
-        <span class="badge bl">Koblenz</span>
-        <span class="badge bh">Homeoffice möglich</span>
-        <span class="badge bg">Produktmanager</span>
-        <span class="badge ba">Achtung: Verteidigungstechnik</span>
-      </div>
-      <div class="skills-row">
-        <span class="skill match">Projektmanagement</span>
-        <span class="skill match">Stakeholder-Management</span>
-        <span class="skill match">Produktmanagement</span>
-        <span class="skill">Verteidigungstechnik</span>
-        <span class="skill">Sicherheitssysteme</span>
-      </div>
-      <div class="job-note">11 offene Stellen in der Region · Hinweis: Verteidigungstechnik, hardware-nah</div>
-    </div>
-    <div class="job-right">
-      <div class="job-dist">direkt · Koblenz</div>
-      <a class="job-link" href="https://careers.thalesgroup.com/global/en/search-results?keywords=koblenz" target="_blank">Zur Stelle →</a>
-    </div>
-  </div>
-</div>
-
-</main>
-
-<div class="footer">Mario Hähn · Stellenübersicht für Jobcoach-Gespräch · März 2026 · haehn6.github.io/Stellensuche</div>
-
-<script>
-let aktOrt = 'alle';
-let aktRolle = 'alle';
-let aktSkill = '';
-
-function filterOrt(val, btn) {
-  aktOrt = val;
-  document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
-    if (['alle','koblenz','nah','hybrid'].includes(b.textContent.trim().toLowerCase().replace(' ','')) ||
-        b.onclick.toString().includes('filterOrt')) b.classList.remove('active');
-  });
-  btn.classList.add('active');
-  applyFilter();
-}
-
-function filterRolle(val, btn) {
-  aktRolle = val;
-  document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
-    if (b.onclick && b.onclick.toString().includes('filterRolle')) b.classList.remove('active');
-  });
-  btn.classList.add('active');
-  applyFilter();
-}
-
-function filterSkill(val, btn) {
-  if (aktSkill === val) {
-    aktSkill = '';
-    btn.classList.remove('skill-active');
-  } else {
-    aktSkill = val;
-    document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
-      if (b.onclick && b.onclick.toString().includes('filterSkill')) b.classList.remove('skill-active');
-    });
-    btn.classList.add('skill-active');
-  }
-  applyFilter();
-}
-
-function applyFilter() {
-  let visible = 0;
-  document.querySelectorAll('.job-card').forEach(card => {
-    const ort = card.dataset.ort || '';
-    const rolle = card.dataset.rolle || '';
-    const ho = card.dataset.ho || '';
-    const skills = card.dataset.skills || '';
-
-    let showOrt = aktOrt === 'alle' ||
-      (aktOrt === 'koblenz' && ort === 'koblenz') ||
-      (aktOrt === 'nah' && (ort === 'nah' || ort === 'koblenz')) ||
-      (aktOrt === 'hybrid' && ho === '1');
-
-    let showRolle = aktRolle === 'alle' || rolle === aktRolle;
-    let showSkill = !aktSkill || skills.toLowerCase().includes(aktSkill.toLowerCase());
-
-    const show = showOrt && showRolle && showSkill;
-    card.classList.toggle('hidden', !show);
-    if (show) visible++;
-  });
-  document.getElementById('visCount').textContent = visible;
-  document.getElementById('counterBar').textContent = visible + ' von 25 Stellen angezeigt';
-}
-
-// Skill-chips on cards clickable
-document.querySelectorAll('.skill').forEach(s => {
-  s.addEventListener('click', () => {
-    const skillText = s.textContent.trim().split(' ')[0];
-    // Find the filter button
-    const btns = document.querySelectorAll('.filter-bar .fbtn');
-    let found = false;
-    btns.forEach(b => {
-      if (b.onclick && b.onclick.toString().includes('filterSkill') &&
-          b.textContent.trim().toLowerCase() === skillText.toLowerCase()) {
-        filterSkill(b.textContent.trim(), b);
-        found = true;
-      }
-    });
-  });
-});
-</script>
 </body>
 </html>
