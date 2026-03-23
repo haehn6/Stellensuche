@@ -3,689 +3,930 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bewerbungs-Manager — Mario Hähn</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<title>Stellenübersicht — Mario · März 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#F5F3EE; --surface:#FFFFFF; --surface2:#EFEDE8; --border:#DDD9D0;
   --text:#1A1916; --text2:#6B6760; --text3:#9E9B96;
-  --accent:#2C2C2A; --accent2:#5C5A56;
+  --accent:#2C2C2A;
   --green:#2D6A4F; --green-bg:#D8F3DC;
-  --amber:#7C5C0A; --amber-bg:#FFF3CD;
-  --red:#7C2020; --red-bg:#FFE5E5;
   --blue:#1A3A5C; --blue-bg:#E3EEF9;
+  --amber:#7C5C0A; --amber-bg:#FFF3CD;
   --purple:#4C1D95; --purple-bg:#EDE9FE;
+  --teal:#0F6E56; --teal-bg:#E1F5EE;
   --r:10px; --rs:6px;
-  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{background:var(--accent);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
-.nav-brand{font-family:'DM Serif Display',serif;color:#fff;font-size:18px;}
-.nav-tabs{display:flex;gap:2px;}
-.nav-tab{background:none;border:none;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:6px 14px;border-radius:6px;cursor:pointer;transition:all .15s;}
-.nav-tab:hover{color:#fff;background:rgba(255,255,255,.1);}
-.nav-tab.active{color:#fff;background:rgba(255,255,255,.18);}
-.api-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer;padding:5px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.15);}
-.api-pill:hover{background:rgba(255,255,255,.08);}
-.api-dot{width:7px;height:7px;border-radius:50%;background:#888;}
-.api-dot.ok{background:#6EE7B7;}
-.page{display:none;padding:2rem;max-width:1100px;margin:0 auto;}
-.page.active{display:block;}
-h1{font-family:'DM Serif Display',serif;font-size:28px;font-weight:400;margin-bottom:6px;}
-h2{font-family:'DM Serif Display',serif;font-size:20px;font-weight:400;margin-bottom:16px;}
-.subtitle{color:var(--text2);font-size:14px;margin-bottom:28px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow);margin-bottom:16px;}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.stat-tile{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;}
-.stat-label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-.stat-val{font-family:'DM Serif Display',serif;font-size:34px;color:var(--text);}
-.stat-sub{font-size:12px;color:var(--text2);margin-top:4px;}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;}
-.btn-primary{background:var(--accent);color:#fff;}
-.btn-primary:hover{background:#444;}
-.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
-.btn-outline:hover{background:var(--surface2);}
-.btn-sm{padding:6px 12px;font-size:12px;}
-.btn:disabled{opacity:.4;cursor:not-allowed;}
-label{font-size:13px;font-weight:500;color:var(--text2);display:block;margin-bottom:5px;}
-input,textarea,select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color .15s;}
-input:focus,textarea:focus,select:focus{border-color:var(--accent2);}
-textarea{resize:vertical;line-height:1.6;}
-.fr{margin-bottom:16px;}
-.fr2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-.badge{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;}
-.bg{background:var(--green-bg);color:var(--green);}
+
+/* Header */
+.header{background:var(--accent);padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:flex-end;}
+.header-left h1{font-family:'DM Serif Display',serif;color:#fff;font-size:22px;font-weight:400;}
+.header-left p{color:rgba(255,255,255,.5);font-size:13px;margin-top:4px;}
+.header-right{text-align:right;}
+.header-right .stat{color:#fff;font-size:13px;}
+.header-right .stat span{font-family:'DM Serif Display',serif;font-size:28px;display:block;line-height:1;}
+
+/* Profil-Chip */
+.profil-bar{background:#fff;border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.profil-label{font-size:12px;color:var(--text3);margin-right:4px;}
+.chip{font-size:12px;padding:3px 10px;border-radius:20px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
+.chip.highlight{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+/* Filter-Bar */
+.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.filter-label{font-size:12px;color:var(--text3);margin-right:2px;white-space:nowrap;}
+.fbtn{font-size:12px;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.fbtn:hover{border-color:var(--accent);color:var(--text);}
+.fbtn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.fbtn.skill-active{background:var(--blue-bg);color:var(--blue);border-color:#b3d4f0;}
+.filter-sep{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0;}
+.counter-bar{padding:.5rem 2rem;font-size:12px;color:var(--text3);}
+
+/* Main */
+main{padding:1.5rem 2rem;max-width:1200px;margin:0 auto;}
+
+/* Job cards */
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;margin-bottom:12px;transition:all .15s;}
+.job-card:hover{border-color:#888;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.job-card.hidden{display:none;}
+.job-card.top{border-left:3px solid var(--teal);}
+.job-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.job-left{flex:1;min-width:0;}
+.num{font-size:11px;font-weight:600;color:var(--text3);background:var(--surface2);border-radius:4px;padding:1px 6px;margin-right:6px;}
+.job-title{font-size:15px;font-weight:500;color:var(--text);}
+.job-company{font-size:13px;color:var(--text2);margin-top:3px;}
+.job-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500;white-space:nowrap;}
+.bl{background:#EEEDFE;color:#534AB7;}
+.bh{background:var(--blue-bg);color:var(--blue);}
+.bg{background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
+.bt{background:var(--teal-bg);color:var(--teal);}
 .ba{background:var(--amber-bg);color:var(--amber);}
-.br{background:var(--red-bg);color:var(--red);}
-.bb{background:var(--blue-bg);color:var(--blue);}
-.bp{background:var(--purple-bg);color:var(--purple);}
-.bgr{background:var(--surface2);color:var(--text2);border:1px solid var(--border);}
-.job-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;transition:all .15s;}
-.job-row:hover{border-color:var(--accent2);box-shadow:var(--shadow);}
-.job-row.neue{border-left:3px solid var(--green);}
-.job-row.weg{opacity:.45;}
-.job-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-.jt{font-weight:500;font-size:14px;}
-.jc{font-size:13px;color:var(--text2);margin-top:2px;}
-.jbadges{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
-.jact{display:flex;gap:6px;flex-shrink:0;}
-.bew-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-bottom:10px;}
-.bew-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
-.bew-status{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
-.sb{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;}
-.sb.sv{background:var(--blue-bg);color:var(--blue);border-color:#b3d4f0;}
-.sb.sa{background:var(--amber-bg);color:var(--amber);border-color:#ffd97d;}
-.sb.sg{background:var(--purple-bg);color:var(--purple);border-color:#c4b5fd;}
-.sb.sab{background:var(--red-bg);color:var(--red);border-color:#ffc9c9;}
-.sb.san{background:var(--green-bg);color:var(--green);border-color:#b7e4c7;}
-.gen-out{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px;font-size:14px;line-height:1.8;white-space:pre-wrap;min-height:220px;color:var(--text);}
-.gen-out .ph{color:var(--text3);font-style:italic;}
-.portal-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;transition:border-color .15s;}
-.portal-row:hover{border-color:var(--accent2);}
-.plink{font-size:12px;color:var(--blue);text-decoration:none;padding:6px 14px;border:1px solid #b3d4f0;border-radius:var(--rs);background:var(--blue-bg);white-space:nowrap;}
-.plink:hover{background:#c8dff4;}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;}
-.modal-bg.open{display:flex;}
-.modal{background:var(--surface);border-radius:var(--r);padding:28px;width:460px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.2);}
-.modal h3{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:8px;}
-.modal p{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.6;}
-.modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
-.divider{height:1px;background:var(--border);margin:24px 0;}
-.fb{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-.gap{display:flex;gap:8px;}
-.sec-title{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-.analyse-sec{margin-bottom:22px;}
-.at{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.empty{font-size:13px;color:var(--text3);font-style:italic;padding:8px 0;}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;padding:12px 20px;border-radius:var(--r);font-size:13px;z-index:300;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
-.toast.show{transform:translateY(0);opacity:1;}
+
+/* Skills */
+.skills-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
+.skill{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--blue-bg);color:var(--blue);border:1px solid #c5dff5;cursor:pointer;transition:all .12s;}
+.skill:hover{background:#b3d4f0;}
+.skill.match{background:var(--teal-bg);color:var(--teal);border-color:#9fe1cb;}
+
+/* Right side */
+.job-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.job-dist{font-size:12px;color:var(--text3);text-align:right;}
+.job-link{font-size:12px;color:var(--blue);text-decoration:none;padding:6px 14px;border:1px solid #b3d4f0;border-radius:var(--rs);background:var(--blue-bg);white-space:nowrap;}
+.job-link:hover{background:#c8dff4;}
+.job-note{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.5;padding-top:8px;border-top:1px solid var(--border);}
+
+/* Section divider */
+.section-div{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:14px 0 8px;border-bottom:1px solid var(--border);margin-bottom:12px;margin-top:4px;}
+
+/* Footer */
+.footer{text-align:center;padding:2rem;font-size:12px;color:var(--text3);}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">Bewerbungs-Manager</div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('dashboard',this)">Dashboard</button>
-    <button class="nav-tab" onclick="showPage('stellen',this)">Stellen</button>
-    <button class="nav-tab" onclick="showPage('bewerbungen',this)">Bewerbungen</button>
-    <button class="nav-tab" onclick="showPage('generator',this)">Anschreiben</button>
-    <button class="nav-tab" onclick="showPage('portale',this)">Jobbörsen</button>
-    <button class="nav-tab" onclick="showPage('profil',this)">Profil</button>
+<div class="header">
+  <div class="header-left">
+    <h1>Stellenübersicht — Mario Hähn</h1>
+    <p>Engineering Lead · Product Owner · Projektmanager · Region Koblenz · März 2026</p>
   </div>
-  <div class="api-pill" onclick="openModal('apiModal')">
-    <div class="api-dot" id="apiDot"></div>
-    <span id="apiStatus">API-Key einrichten</span>
+  <div class="header-right">
+    <div class="stat"><span id="visCount">25</span> Stellen</div>
   </div>
-</nav>
+</div>
 
-<!-- DASHBOARD -->
-<div class="page active" id="page-dashboard">
-  <h1>Guten Morgen, Mario.</h1>
-  <p class="subtitle" id="dashDate"></p>
-  <div class="grid3" style="margin-bottom:20px">
-    <div class="stat-tile"><div class="stat-label">Offene Bewerbungen</div><div class="stat-val" id="s1">0</div><div class="stat-sub">aktiv verfolgt</div></div>
-    <div class="stat-tile"><div class="stat-label">Gespeicherte Stellen</div><div class="stat-val" id="s2">0</div><div class="stat-sub">in der Merkliste</div></div>
-    <div class="stat-tile"><div class="stat-label">Anschreiben erstellt</div><div class="stat-val" id="s3">0</div><div class="stat-sub">gesamt</div></div>
-  </div>
-  <div class="grid2">
-    <div class="card">
-      <h2>Aktive Bewerbungen</h2>
-      <div id="dashBew"><p class="empty">Noch keine Bewerbungen erfasst.</p></div>
-    </div>
-    <div class="card">
-      <h2>Heutige Jobbörsen-Suchen</h2>
-      <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Vorausgefüllte Suchanfragen für dein Profil:</p>
-      <div style="display:flex;flex-direction:column;gap:7px">
-        <a href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank" class="btn btn-outline btn-sm">StepStone — Product Owner Koblenz →</a>
-        <a href="https://www.stepstone.de/jobs/projektmanager-in/in-koblenz" target="_blank" class="btn btn-outline btn-sm">StepStone — Projektmanager Koblenz →</a>
-        <a href="https://www.stepstone.de/jobs/scrum-master/in-koblenz" target="_blank" class="btn btn-outline btn-sm">StepStone — Scrum Master Koblenz →</a>
-        <a href="https://de.indeed.com/q-product-owner-l-koblenz-jobs.html" target="_blank" class="btn btn-outline btn-sm">Indeed — Product Owner Koblenz →</a>
-        <a href="https://karriere.debeka.de/offene-stellen" target="_blank" class="btn btn-outline btn-sm">Debeka — IT Karriere direkt →</a>
-        <a href="https://www.bwi.de/karriere/stellenangebote" target="_blank" class="btn btn-outline btn-sm">BWI GmbH — Koblenz IT-Stellen →</a>
+<div class="profil-bar">
+  <span class="profil-label">Profil-Skills:</span>
+  <span class="chip highlight">Scrum / Kanban</span>
+  <span class="chip highlight">Backlog & Anforderungen</span>
+  <span class="chip highlight">Teamführung 11–20 MA</span>
+  <span class="chip highlight">Jira / Confluence</span>
+  <span class="chip highlight">Roadmap-Planung</span>
+  <span class="chip highlight">Frontend / Web</span>
+  <span class="chip highlight">EAA / Barrierefreiheit</span>
+  <span class="chip highlight">Usability</span>
+  <span class="chip highlight">Recruiting</span>
+  <span class="chip">Verfügbar: sofort</span>
+  <span class="chip">Gehalt: 55–65k€</span>
+  <span class="chip">Region: Koblenz +30km</span>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Ort:</span>
+  <button class="fbtn active" onclick="filterOrt('alle',this)">Alle</button>
+  <button class="fbtn" onclick="filterOrt('koblenz',this)">Koblenz direkt</button>
+  <button class="fbtn" onclick="filterOrt('nah',this)">bis 20km</button>
+  <button class="fbtn" onclick="filterOrt('hybrid',this)">Homeoffice möglich</button>
+  <div class="filter-sep"></div>
+  <span class="filter-label">Rolle:</span>
+  <button class="fbtn active" onclick="filterRolle('alle',this)">Alle</button>
+  <button class="fbtn" onclick="filterRolle('po',this)">Product Owner</button>
+  <button class="fbtn" onclick="filterRolle('pm',this)">Projektmanager</button>
+  <button class="fbtn" onclick="filterRolle('lead',this)">Team Lead</button>
+  <button class="fbtn" onclick="filterRolle('prozess',this)">Prozessmanager</button>
+  <div class="filter-sep"></div>
+  <span class="filter-label">Skill gesucht:</span>
+  <button class="fbtn" onclick="filterSkill('Scrum',this)">Scrum</button>
+  <button class="fbtn" onclick="filterSkill('Agile',this)">Agile</button>
+  <button class="fbtn" onclick="filterSkill('Jira',this)">Jira</button>
+  <button class="fbtn" onclick="filterSkill('Backlog',this)">Backlog</button>
+  <button class="fbtn" onclick="filterSkill('Führung',this)">Führung</button>
+  <button class="fbtn" onclick="filterSkill('Krisensicher',this)">Krisensicher</button>
+</div>
+
+<div class="counter-bar" id="counterBar">25 von 25 Stellen angezeigt</div>
+
+<main>
+
+<div class="section-div">Koblenz — direkt vor Ort</div>
+
+<div class="job-card top" data-ort="koblenz" data-rolle="po" data-ho="1" data-skills="Scrum Kanban Backlog Agile Jira Produktmanagement Stakeholder">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">1</span>Product Owner (m/w/d)</div>
+      <div class="job-company">Reisen Aktuell GmbH — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Product Owner</span>
+        <span class="badge bt">Top-Empfehlung</span>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- STELLEN -->
-<div class="page" id="page-stellen">
-  <div class="fb"><div><h1>Stellen-Merkliste</h1><p class="subtitle">Stellen speichern, täglich vergleichen</p></div>
-    <button class="btn btn-primary" onclick="openModal('stelleModal')">+ Stelle hinzufügen</button>
-  </div>
-  <div class="card" style="margin-bottom:20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <h2 style="margin:0">Tages-Analyse</h2>
-      <button class="btn btn-outline btn-sm" onclick="saveSnapshot()">Snapshot jetzt speichern</button>
-    </div>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Vergleich mit gestern — neu hinzugefügte und weggefallene Stellen in deiner Liste.</p>
-    <div class="analyse-sec">
-      <div class="at"><span class="badge bg">NEU</span> Neue Stellen seit gestern</div>
-      <div id="aneu"><p class="empty">Noch kein Snapshot vorhanden. Speichere heute einen Snapshot — morgen wird verglichen.</p></div>
-    </div>
-    <div class="analyse-sec">
-      <div class="at"><span class="badge br">WEG</span> Nicht mehr in der Liste</div>
-      <div id="aweg"><p class="empty">Kein Vergleich möglich.</p></div>
-    </div>
-  </div>
-  <div id="stellenListe"><p class="empty">Noch keine Stellen gespeichert.</p></div>
-</div>
-
-<!-- BEWERBUNGEN -->
-<div class="page" id="page-bewerbungen">
-  <div class="fb"><div><h1>Bewerbungs-Tracker</h1><p class="subtitle">Status, Datum und Notizen zu jeder Bewerbung</p></div>
-    <button class="btn btn-primary" onclick="openModal('bewModal')">+ Bewerbung erfassen</button>
-  </div>
-  <div id="bewListe"><p class="empty">Noch keine Bewerbungen erfasst.</p></div>
-</div>
-
-<!-- GENERATOR -->
-<div class="page" id="page-generator">
-  <h1>Anschreiben-Generator</h1>
-  <p class="subtitle">Stelle eingeben → per KI generieren → prüfen → versenden</p>
-  <div class="grid2">
-    <div class="card">
-      <h2>Stellendetails</h2>
-      <div class="fr"><label>Jobtitel</label><input id="gTitel" placeholder="Product Owner (m/w/d)"></div>
-      <div class="fr"><label>Unternehmen</label><input id="gFirma" placeholder="Reisen Aktuell GmbH"></div>
-      <div class="fr"><label>Ort</label><input id="gOrt" placeholder="Koblenz"></div>
-      <div class="fr"><label>Ansprechperson (optional)</label><input id="gAnsprech" placeholder="Frau Müller / Personalmanagement"></div>
-      <div class="fr"><label>Besonderheiten der Stelle (optional)</label><textarea id="gBes" rows="3" placeholder="z.B. Ausbildung akzeptiert, Startup-Kultur, 300 MA, agiles Team…"></textarea></div>
-      <div class="fr"><label>Briefstil</label>
-        <select id="gStil">
-          <option value="modern">Modern — sachlich, direkt, selbstbewusst</option>
-          <option value="klassisch">Klassisch — strukturiert, professionell, vertrauenswürdig</option>
-          <option value="it">IT-Projektmanager — präzise, konkrete Zahlen, faktenorientiert</option>
-          <option value="minimal">Minimal — kurz, knapp, prägnant</option>
-        </select>
+      <div class="skills-row">
+        <span class="skill match">Scrum</span>
+        <span class="skill match">Kanban</span>
+        <span class="skill match">Backlog-Management</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Stakeholder-Abstimmung</span>
+        <span class="skill">Produktmanagement</span>
+        <span class="skill">Dokumentation</span>
       </div>
-      <button class="btn btn-primary" id="genBtn" onclick="genAnschreiben()" style="width:100%">Anschreiben generieren</button>
+      <div class="job-note">Ausbildung + Erfahrung als Alternative zum Studium explizit akzeptiert · 300 MA · inhabergeführt · 30 Urlaubstage · Fitnessstudio</div>
     </div>
-    <div class="card" style="display:flex;flex-direction:column">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-        <h2 style="margin:0">Ergebnis</h2>
-        <div class="gap">
-          <button class="btn btn-outline btn-sm" id="copyBtn" onclick="copyGen()" disabled>Kopieren</button>
-          <button class="btn btn-outline btn-sm" id="dlBtn" onclick="dlGen()" disabled>Als .txt speichern</button>
-          <button class="btn btn-outline btn-sm" id="bewBtn" onclick="genZuBew()" disabled>→ Bewerbung erfassen</button>
-        </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card top" data-ort="koblenz" data-rolle="po" data-ho="1" data-skills="Backlog Anforderungsmanagement Scrum Agile Führung Stakeholder Roadmap Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">2</span>Product Owner / Business Analyst (w/m/d)</div>
+      <div class="job-company">Debeka-Gruppe — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">bis 60% Homeoffice</span>
+        <span class="badge bg">Product Owner</span>
+        <span class="badge bt">Top-Empfehlung</span>
       </div>
-      <div class="gen-out" id="genOut" style="flex:1"><span class="ph">Trage links die Stellendetails ein und klicke auf "Anschreiben generieren".</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- PORTALE -->
-<div class="page" id="page-portale">
-  <h1>Jobbörsen & Direktbewerbung</h1>
-  <p class="subtitle">Alle relevanten Portale mit vorausgefüllten Suchanfragen für dein Profil</p>
-  <h2>Jobbörsen — Region Koblenz</h2>
-  <div id="pLokal"></div>
-  <div class="divider"></div>
-  <h2>Direktbewerbung bei lokalen Arbeitgebern</h2>
-  <div id="pDirekt"></div>
-</div>
-
-<!-- PROFIL -->
-<div class="page" id="page-profil">
-  <h1>Mein Bewerberprofil</h1>
-  <p class="subtitle">Wird für den Anschreiben-Generator verwendet. Bitte vollständig ausfüllen.</p>
-  <div class="card">
-    <div class="fr"><div class="sec-title">Persönliche Daten</div></div>
-    <div class="fr2"><div><label>Name</label><input id="pN" value="Mario Hähn"></div><div><label>Wohnort</label><input id="pO" value="Winningen"></div></div>
-    <div class="fr2"><div><label>Telefon</label><input id="pT" value="0163 1910236"></div><div><label>E-Mail</label><input id="pE" value="haehn6@gmail.com"></div></div>
-    <div class="fr"><label>Adresse</label><input id="pA" value="Dr.-Bellinghausen-Straße 13, 56333 Winningen"></div>
-    <div class="divider" style="margin:16px 0"></div>
-    <div class="fr"><div class="sec-title">Aktuelle Situation</div></div>
-    <div class="fr"><label>Verfügbarkeit</label><input id="pV" value="Sofort verfügbar (arbeitssuchend seit 31.10.2025)"></div>
-    <div class="fr"><label>Grund des Arbeitgeberwechsels</label><textarea id="pG" rows="2">Modix GmbH hat ihr Deutschlandgeschäft zum 31. Oktober 2025 eingestellt. Arbeitsverhältnis endete betriebsbedingt.</textarea></div>
-    <div class="fr2"><div><label>Gehaltsvorstellung (von)</label><input id="pGv" value="55.000 €"></div><div><label>Gehaltsvorstellung (bis)</label><input id="pGb" value="65.000 €"></div></div>
-    <div class="divider" style="margin:16px 0"></div>
-    <div class="fr"><div class="sec-title">Werdegang</div></div>
-    <div class="fr"><textarea id="pW" rows="7">2015–2020: Frontend-Entwickler, Modix GmbH — Entwicklung internationaler Fahrzeugportale für OEMs (Volvo, Honda u.a.)
-2020–2022: Team Lead, Modix GmbH — Fachliche und disziplinarische Führung eines Entwicklungsteams (11–20 Personen)
-2022–Okt. 2025: Engineering Lead, Modix GmbH — Technische Führung mehrerer agiler Teams, 10+ internationale Fahrzeugportale für Audi, Bentley, Nissan
-2011–2015: Webmaster & Digital Marketing, EHL AG
-2008–2011: Ausbildung Mediengestalter Digital und Print, TechniSat Digital GmbH</textarea></div>
-    <div class="divider" style="margin:16px 0"></div>
-    <div class="fr"><div class="sec-title">Kernkompetenzen</div></div>
-    <div class="fr"><textarea id="pK" rows="4">Brücke zwischen Technik und Business, Backlog-Priorisierung, Anforderungsmanagement, Scrum + Kanban (operativ gelebt), Jira + Confluence, Teamführung (11–20 Personen), Roadmap-Planung mit PM, Recruiting mitverantwortet, Onboarding-Prozesse strukturiert, European Accessibility Act (EAA/BFSG) — barrierefreie Umsetzung mehrerer Produktivportale 2024–2025, Usability, Frontend-Know-how (HTML, CSS, JS), Barrierefreies Webdesign</textarea></div>
-    <div class="fr"><label>Zielrollen</label><input id="pZ" value="Product Owner, Produktmanager, Projektleiter, Scrum Master, Team Lead — Führung + Steuerung, keine rein technische Rolle"></div>
-    <div class="fr"><label>Bevorzugte Region</label><input id="pR" value="Koblenz und Umgebung (max. 30km), Homeoffice-Anteil erwünscht"></div>
-    <button class="btn btn-primary" onclick="saveProfil()">Profil speichern</button>
-  </div>
-</div>
-
-
-<!-- MODALS -->
-<div class="modal-bg" id="apiModal">
-  <div class="modal" style="width:500px;max-width:95vw">
-    <h3>KI-Einstellungen</h3>
-    <p>Wähle, wie Anschreiben generiert werden sollen.</p>
-    <div class="fr">
-      <label>Modus</label>
-      <select id="aiModus" onchange="updateModusUI()">
-        <option value="ollama">Ollama — kostenlos, lokal auf deinem PC</option>
-        <option value="anthropic">Anthropic API — Claude, kostenpflichtig</option>
-      </select>
-    </div>
-    <div id="ollamaSection">
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);padding:14px;font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px">
-        <strong style="color:var(--text)">Einrichtung (einmalig, ~5 Minuten):</strong><br>
-        1. <a href="https://ollama.com/download" target="_blank" style="color:var(--blue)">ollama.com/download</a> herunterladen und installieren<br>
-        2. Terminal öffnen und eingeben: <code style="background:var(--border);padding:1px 5px;border-radius:3px">ollama pull mistral</code><br>
-        3. Ollama läuft dann im Hintergrund auf Port 11434<br>
-        4. Diese App verbindet sich automatisch damit
+      <div class="skills-row">
+        <span class="skill match">Backlog-Management</span>
+        <span class="skill match">Anforderungsanalyse</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Roadmap-Planung</span>
+        <span class="skill">IT-Kenntnisse</span>
+        <span class="skill">Versicherungs-IT</span>
+        <span class="skill">Krisensicher</span>
       </div>
-      <div class="fr">
-        <label>Modell</label>
-        <select id="ollamaModel">
-          <option value="mistral">mistral — empfohlen, gutes Deutsch (~4GB)</option>
-          <option value="llama3.2">llama3.2 — sehr gut, etwas größer (~2GB)</option>
-          <option value="llama3.1">llama3.1 — stark, größer (~4.7GB)</option>
-          <option value="phi3">phi3 — klein und schnell (~2.3GB)</option>
-          <option value="gemma2">gemma2 — von Google (~5.5GB)</option>
-        </select>
+      <div class="job-note">14 Monatsgehälter · Direktbewerbung über karriere.debeka.de bevorzugt · Scrum-Master-Förderung intern möglich</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere" target="_blank">Direktbewerbung →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Führung Stakeholder Agile Digitalisierung Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">3</span>IT-Projektleiter Digitalisierung (w/m/d)</div>
+      <div class="job-company">Debeka-Gruppe — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">bis 80% Homeoffice</span>
+        <span class="badge bg">Projektleiter</span>
       </div>
-      <div class="fr">
-        <label>Ollama URL (Standard: localhost)</label>
-        <input id="ollamaUrl" value="http://localhost:11434" placeholder="http://localhost:11434">
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Führung</span>
+        <span class="skill">Digitalisierung</span>
+        <span class="skill">Prozessoptimierung</span>
+        <span class="skill">Krisensicher</span>
       </div>
-      <button class="btn btn-outline btn-sm" onclick="testOllama()" id="testBtn">Verbindung testen</button>
-      <span id="testResult" style="font-size:12px;margin-left:10px;color:var(--text2)"></span>
+      <div class="job-note">Parallel zur PO-Stelle bewerben — eine Bewerbungsmappe reicht für alle Debeka-IT-Stellen</div>
     </div>
-    <div id="anthropicSection" style="display:none">
-      <div class="fr"><label>API-Key</label><input type="password" id="apiIn" placeholder="sk-ant-..."></div>
-      <p style="font-size:12px;color:var(--text3)">Erhältlich unter <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue)">console.anthropic.com</a> — ca. 1–2 Cent pro Anschreiben.</p>
-    </div>
-    <div class="modal-act">
-      <button class="btn btn-outline" onclick="closeModal('apiModal')">Abbrechen</button>
-      <button class="btn btn-primary" onclick="saveKey()">Speichern</button>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere" target="_blank">Direktbewerbung →</a>
     </div>
   </div>
 </div>
 
-<div class="modal-bg" id="stelleModal">
-  <div class="modal" style="width:520px;max-width:95vw">
-    <h3>Stelle hinzufügen</h3>
-    <div class="fr2"><div><label>Jobtitel</label><input id="smT" placeholder="Product Owner (m/w/d)"></div><div><label>Unternehmen</label><input id="smF" placeholder="Reisen Aktuell GmbH"></div></div>
-    <div class="fr2"><div><label>Ort</label><input id="smO" placeholder="Koblenz"></div><div><label>Entfernung</label><input id="smE" placeholder="direkt / ~15km"></div></div>
-    <div class="fr"><label>Link zur Stelle</label><input id="smL" placeholder="https://..."></div>
-    <div class="fr"><label>Notiz</label><textarea id="smN" rows="2" placeholder="Besonderheiten, Gehalt, Ansprechperson…"></textarea></div>
-    <div class="modal-act"><button class="btn btn-outline" onclick="closeModal('stelleModal')">Abbrechen</button><button class="btn btn-primary" onclick="saveStelle()">Speichern</button></div>
+<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement PMO Controlling Stakeholder Führung Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">4</span>Portfoliomanager / Projektleiter (w/m/d)</div>
+      <div class="job-company">Debeka-Gruppe — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">PMO</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Multiprojektsteuerung</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill">PMO</span>
+        <span class="skill">Projektcontrolling</span>
+        <span class="skill">Reporting</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Dritte Debeka-Stelle — mit einer Mappe alle drei gleichzeitig bewerben</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere" target="_blank">Direktbewerbung →</a>
+    </div>
   </div>
 </div>
 
-<div class="modal-bg" id="bewModal">
-  <div class="modal" style="width:520px;max-width:95vw">
-    <h3>Bewerbung erfassen</h3>
-    <div class="fr2"><div><label>Jobtitel</label><input id="bmT" placeholder="Product Owner (m/w/d)"></div><div><label>Unternehmen</label><input id="bmF" placeholder="Debeka"></div></div>
-    <div class="fr2"><div><label>Datum Versand</label><input type="date" id="bmD"></div><div><label>Kontaktperson (optional)</label><input id="bmK" placeholder="Frau Müller"></div></div>
-    <div class="fr"><label>Notizen</label><textarea id="bmN" rows="2" placeholder="Gesprächstermin, Besonderheiten…"></textarea></div>
-    <div class="modal-act"><button class="btn btn-outline" onclick="closeModal('bewModal')">Abbrechen</button><button class="btn btn-primary" onclick="saveBew()">Speichern</button></div>
+<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digitalisierung Stakeholder Agile Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">5</span>Projektmanager Digitales Messwesen (m/w/d)</div>
+      <div class="job-company">Energieversorgung Mittelrhein (evm) — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektmanager</span>
+        <span class="badge bt">Top-Empfehlung</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Koordination</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill">Smart Metering</span>
+        <span class="skill">Energiewirtschaft</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Top Company 2026 · 30 Urlaubstage · kommunaler Versorger · krisensicher</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://technischer-bereich-karriere.evm.de/" target="_blank">Zur Stelle →</a>
+    </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="job-card" data-ort="koblenz" data-rolle="prozess" data-ho="1" data-skills="Prozessmanagement Digitalisierung IT Stakeholder Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">6</span>Prozessmanager IT (m/w/d)</div>
+      <div class="job-company">Energieversorgung Mittelrhein (evm) — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Prozessmanager</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Prozessoptimierung</span>
+        <span class="skill match">IT-Prozesse</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill match">Stakeholder-Abstimmung</span>
+        <span class="skill">Dokumentation</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Zweite evm-Stelle — parallel zur PM-Stelle bewerben</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://de.indeed.com/q-evm-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="koblenz" data-rolle="lead" data-ho="1" data-skills="Scrum Agile Führung Projektmanagement Jira">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">7</span>IT-Projektleiter / Agile Coach (m/w/d)</div>
+      <div class="job-company">IABG mbH — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Agile Coach</span>
+        <span class="badge ba">Achtung: Bundeswehr-nah</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Scrum</span>
+        <span class="skill match">Agile Coaching</span>
+        <span class="skill match">Projektleitung</span>
+        <span class="skill match">Jira</span>
+        <span class="skill match">Führung</span>
+        <span class="skill">IT-Beratung</span>
+      </div>
+      <div class="job-note">Flexible Rolle als PL, SM oder PO je nach Projekt · Hinweis: Bundeswehr-nahes Umfeld</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Frontend Digitalisierung Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">8</span>Technische/r Projektleiter/in Software (m/w/d)</div>
+      <div class="job-company">Pädagogisches Landesinstitut RLP — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektleiter</span>
+        <span class="badge bg">Öffentlicher Dienst</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Frontend-Know-how</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill">Bildungs-IT</span>
+        <span class="skill">TV-L EG 11</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">TV-L EG 11 · unbefristet · eSchule-Portale · Frontend-Erfahrung direkt gefragt</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="koblenz" data-rolle="prozess" data-ho="1" data-skills="Prozessmanagement Digitalisierung IT Stakeholder Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">9</span>IT-Prozessmanager / Digitalisierungsbeauftragter (m/w/d)</div>
+      <div class="job-company">Gemeinschaftsklinikum Mittelrhein — Koblenz / Mayen / Boppard</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Prozessmanager</span>
+        <span class="badge bg">Neu</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Prozessoptimierung</span>
+        <span class="skill match">IT-Projektmanagement</span>
+        <span class="skill match">Stakeholder-Abstimmung</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill">Krankenhaus-IT</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Klinikverbund, 3 Standorte · krisensicher · EAA-Know-how relevant für Patientenportale</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://www.gk.de/beruf-und-karriere/aktuelle-stellenangebote" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="koblenz" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Frontend Digitalisierung Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">10</span>Projektmitarbeiterin/in Digitale Kommunikation (m/w/d)</div>
+      <div class="job-company">Universität Koblenz (ZFUW) — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Digitalprojekte</span>
+        <span class="badge bg">Öffentlicher Dienst</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Digitale Kommunikation</span>
+        <span class="skill match">Projektkoordination</span>
+        <span class="skill match">Web / Online-Produkte</span>
+        <span class="skill">Marketing-IT</span>
+        <span class="skill">TV-L EG 11</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">TV-L EG 11 · unbefristet · Berufserfahrung als Alternative akzeptiert</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-div">Umkreis Koblenz — 10 bis 25km</div>
+
+<div class="job-card top" data-ort="nah" data-rolle="lead" data-ho="1" data-skills="Scrum Agile Kanban Führung Jira">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">11</span>Scrum Master (m/w/d)</div>
+      <div class="job-company">MEBEDO GmbH — Urmitz (~10km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Urmitz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Scrum Master</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Scrum</span>
+        <span class="skill match">Kanban</span>
+        <span class="skill match">Agile Coaching</span>
+        <span class="skill match">Sprint-Planung</span>
+        <span class="skill match">Jira</span>
+        <span class="skill">Servant Leadership</span>
+        <span class="skill">Teamentwicklung</span>
+      </div>
+      <div class="job-note">Softwareprodukt ELEKTROMANAGER · keine Reisetätigkeit · kurze Entscheidungswege</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~10km · Urmitz</div>
+      <a class="job-link" href="https://www.stepstone.de/jobs/scrum-master/in-koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Jira Agile">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">12</span>Projektmanager (m/w/d)</div>
+      <div class="job-company">SHD Solutions GmbH — Andernach (~15km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Andernach</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektmanager</span>
+        <span class="badge bt">Top-Empfehlung</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Führung</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Jira</span>
+        <span class="skill">ERP-Systeme</span>
+        <span class="skill">Kundenprojekte</span>
+      </div>
+      <div class="job-note">IT-Marktführer Möbel-/Küchenbranche · 500+ MA · Jobrad · Essenszuschuss</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~15km · Andernach</div>
+      <a class="job-link" href="https://de.indeed.com/q-shd-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Usability Stakeholder Web Digital">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">13</span>Senior Product Specialist (m/w/d)</div>
+      <div class="job-company">SHD Solutions GmbH — Andernach (~15km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Andernach</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Produktmanager</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Produktmanagement</span>
+        <span class="skill match">Usability</span>
+        <span class="skill match">Stakeholder-Abstimmung</span>
+        <span class="skill match">Anforderungsanalyse</span>
+        <span class="skill">Product Marketing</span>
+        <span class="skill">Wettbewerbsanalyse</span>
+      </div>
+      <div class="job-note">Parallel zur PM-Stelle bewerben · Kundenbedürfnisse in Produktentwicklung übersetzen</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~15km · Andernach</div>
+      <a class="job-link" href="https://de.indeed.com/q-shd-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digital KI Stakeholder Führung Anforderungsmanagement">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">14</span>Projektleiter Strategieprojekte Digital & KI (m/w/d)</div>
+      <div class="job-company">Lohmann & Rauscher GmbH — Rengsdorf (~20km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Rengsdorf</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektleiter Digital</span>
+        <span class="badge bg">Neu</span>
+        <span class="badge bt">Top-Empfehlung</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Anforderungsmanagement</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Führung</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill">KI-Projekte</span>
+        <span class="skill">Medizintechnik-Kontext</span>
+      </div>
+      <div class="job-note">5.700+ MA weltweit · Anforderungen in technische Konzepte übersetzen = exakter Profil-Match</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~20km · Rengsdorf</div>
+      <a class="job-link" href="https://www.stepstone.de/cmp/de/lohmann-rauscher-gmbh-co-kg-43241/jobs" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Digital KI Stakeholder Führung">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">15</span>Projektmanager Digital & KI (m/w/d)</div>
+      <div class="job-company">Lohmann & Rauscher GmbH — Rengsdorf (~20km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Rengsdorf</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektmanager</span>
+        <span class="badge bg">Neu</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Koordination</span>
+        <span class="skill match">Digitalisierung</span>
+        <span class="skill">KI-Projekte</span>
+        <span class="skill">Prozessgestaltung</span>
+      </div>
+      <div class="job-note">Parallel zur Projektleiter-Stelle bewerben · direkter Kontakt über lohmann-rauscher.com/karriere</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~20km · Rengsdorf</div>
+      <a class="job-link" href="https://de.indeed.com/q-lohmann-rauscher-l-andernach-jobs.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card top" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Kundenprojekte Agile">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">16</span>Projektleiter Logistik (m/w/d)</div>
+      <div class="job-company">Ehrhardt + Partner Group (EPG) — Boppard (~20km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Boppard</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Projektleiter</span>
+        <span class="badge bg">Neu</span>
+        <span class="badge bt">Top-Empfehlung</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Führung</span>
+        <span class="skill match">Kundenprojekte</span>
+        <span class="skill">Logistik-Software</span>
+        <span class="skill">Kick-off bis Go-Live</span>
+        <span class="skill">Reisebereitschaft</span>
+      </div>
+      <div class="job-note">Weltmarktführer Lagerführungssoftware · Reisebereitschaft national erforderlich · direkte Stelle verifiziert</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~20km · Boppard</div>
+      <a class="job-link" href="https://jobs-ads.epg.com/jobposting/d7b0492349721c9d082da6f9adfe54fe368cfc2a" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement IT-Beratung Stakeholder Prozessoptimierung">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">17</span>IT-Projektleiter / Consultant (m/w/d)</div>
+      <div class="job-company">Ehrhardt + Partner Group (EPG) — Boppard (~20km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Boppard</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">IT-Consultant</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Abstimmung</span>
+        <span class="skill match">Prozessoptimierung</span>
+        <span class="skill">IT-Beratung</span>
+        <span class="skill">Logistik-Kontext</span>
+        <span class="skill">Reisebereitschaft</span>
+      </div>
+      <div class="job-note">Parallel zur Projektleiter-Stelle bewerben</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~20km · Boppard</div>
+      <a class="job-link" href="https://www.epg-jobs.com/de/stellenangebote" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement E-Commerce Prozessoptimierung Web Digital Usability">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">18</span>Produkt- und Prozessmanager (m/w/d) Onlineshop</div>
+      <div class="job-company">Löwenstein Medical SE & Co. KG — Bad Ems (~15km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Bad Ems</span>
+        <span class="badge bg">Produktmanager</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Produktmanagement</span>
+        <span class="skill match">E-Commerce</span>
+        <span class="skill match">Prozessgestaltung</span>
+        <span class="skill match">Usability</span>
+        <span class="skill match">Anforderungsanalyse</span>
+        <span class="skill">Sortimentsmanagement</span>
+        <span class="skill">Shopware</span>
+      </div>
+      <div class="job-note">Ausbildung + Erfahrung akzeptiert · neuer Onlineshop · EAA-Know-how direkter Mehrwert</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~15km · Bad Ems</div>
+      <a class="job-link" href="https://www.stepstone.de/stellenangebote--Produkt-und-Prozessmanager-m-w-d-fuer-medizinische-Verbrauchsprodukte-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753233-inline.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="po" data-ho="1" data-skills="Product Owner Backlog Scrum Agile Roadmap KI Stakeholder">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">19</span>AI Product Owner (w/m/d)</div>
+      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Montabaur</span>
+        <span class="badge bh">bis 40% Homeoffice</span>
+        <span class="badge bg">Product Owner</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Backlog-Management</span>
+        <span class="skill match">Scrum</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Roadmap-Planung</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill">KI-Produkte</span>
+        <span class="skill">CRM-Systeme</span>
+        <span class="skill">Prompt Engineering</span>
+      </div>
+      <div class="job-note">Anspruchsvoll — aber Praxiserfahrung zählt mehr als Zertifikate</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~25km · Montabaur</div>
+      <a class="job-link" href="https://www.stepstone.de/stellenangebote--AI-Product-Owner-w-m-d-Montabaur-11--13741505-inline.html" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Roadmap Stakeholder Agile B2B">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">20</span>Product Manager B2B Broadband (m/w/d)</div>
+      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Montabaur</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Produktmanager</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Produktmanagement</span>
+        <span class="skill match">Roadmap-Planung</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill">B2B-Portfolio</span>
+        <span class="skill">Telekommunikation</span>
+        <span class="skill">Go-to-Market</span>
+      </div>
+      <div class="job-note">Alle 1&1-Stellen mit einer Bewerbung abdecken</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~25km · Montabaur</div>
+      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Produktmanagement Roadmap Stakeholder Agile B2B Mobile">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">21</span>Product Manager B2B Mobile (m/w/d)</div>
+      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Montabaur</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Produktmanager</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Produktmanagement</span>
+        <span class="skill match">Roadmap-Planung</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill">B2B Mobile</span>
+        <span class="skill">Telekommunikation</span>
+      </div>
+      <div class="job-note">Parallel zu allen anderen 1&1-Stellen bewerben</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~25km · Montabaur</div>
+      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="lead" data-ho="1" data-skills="Führung Produktmanagement Roadmap Stakeholder B2B Agile">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">22</span>Head of Product Management & Digital B2B (m/w/d)</div>
+      <div class="job-company">1&1 AG — Montabaur (~25km)</div>
+      <div class="job-meta">
+        <span class="badge bl">Montabaur</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Führungsrolle</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Führung 20+ MA</span>
+        <span class="skill match">Produktstrategie</span>
+        <span class="skill match">Roadmap-Planung</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill">B2B-Portfolio</span>
+        <span class="skill">Go-to-Market</span>
+        <span class="skill">P&L-Verantwortung</span>
+      </div>
+      <div class="job-note">Über Gehaltsband · aber Führungserfahrung 20+ MA macht dich zum starken Kandidaten</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">~25km · Montabaur</div>
+      <a class="job-link" href="https://www.stepstone.de/jobs/product-owner/in-koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Stakeholder Führung Agile Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">23</span>IT-Projektmanager (m/w/d)</div>
+      <div class="job-company">BWI GmbH — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">IT-Projektmanager</span>
+        <span class="badge ba">Achtung: Bundeswehr-nah</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Agile Methoden</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Führung</span>
+        <span class="skill">Bundeswehr-IT</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Bundesgesellschaft · krisensicher · Hinweis: IT-Infrastruktur-Anteile möglich</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://www.bwi.de/karriere/stellenangebote" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement PMO Agile Stakeholder Krisensicher">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">24</span>IT-Projektmanager PMO (m/w/d)</div>
+      <div class="job-company">BWI GmbH — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">PMO</span>
+        <span class="badge ba">Achtung: Bundeswehr-nah</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">PMO</span>
+        <span class="skill match">Agile Integration</span>
+        <span class="skill match">Projektmethoden</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill">Krisensicher</span>
+      </div>
+      <div class="job-note">Parallel zur PM-Stelle bewerben · PMO-Methodenentwicklung</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://www.bwi.de/karriere/stellenangebote" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+<div class="job-card" data-ort="nah" data-rolle="pm" data-ho="1" data-skills="Projektmanagement Produktmanagement Stakeholder Thales">
+  <div class="job-top">
+    <div class="job-left">
+      <div class="job-title"><span class="num">25</span>IT-Produktmanager / Projektleiter (m/w/d)</div>
+      <div class="job-company">Thales Deutschland GmbH — Koblenz</div>
+      <div class="job-meta">
+        <span class="badge bl">Koblenz</span>
+        <span class="badge bh">Homeoffice möglich</span>
+        <span class="badge bg">Produktmanager</span>
+        <span class="badge ba">Achtung: Verteidigungstechnik</span>
+      </div>
+      <div class="skills-row">
+        <span class="skill match">Projektmanagement</span>
+        <span class="skill match">Stakeholder-Management</span>
+        <span class="skill match">Produktmanagement</span>
+        <span class="skill">Verteidigungstechnik</span>
+        <span class="skill">Sicherheitssysteme</span>
+      </div>
+      <div class="job-note">11 offene Stellen in der Region · Hinweis: Verteidigungstechnik, hardware-nah</div>
+    </div>
+    <div class="job-right">
+      <div class="job-dist">direkt · Koblenz</div>
+      <a class="job-link" href="https://careers.thalesgroup.com/global/en/search-results?keywords=koblenz" target="_blank">Zur Stelle →</a>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="footer">Mario Hähn · Stellenübersicht für Jobcoach-Gespräch · März 2026 · haehn6.github.io/Stellensuche</div>
 
 <script>
-let stellen = JSON.parse(localStorage.getItem('mh_stellen')||'[]');
-let bews = JSON.parse(localStorage.getItem('mh_bews')||'[]');
-let snaps = JSON.parse(localStorage.getItem('mh_snaps')||'[]');
-let anCount = +localStorage.getItem('mh_ancount')||0;
-let apiKey = localStorage.getItem('mh_apikey')||'';
-let lastGen = '';
+let aktOrt = 'alle';
+let aktRolle = 'alle';
+let aktSkill = '';
 
-// Nav
-function showPage(id,btn){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  if(btn) btn.classList.add('active');
-  if(id==='dashboard') renderDash();
-  if(id==='stellen') renderStellen();
-  if(id==='bewerbungen') renderBews();
-  if(id==='portale') renderPortale();
+function filterOrt(val, btn) {
+  aktOrt = val;
+  document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
+    if (['alle','koblenz','nah','hybrid'].includes(b.textContent.trim().toLowerCase().replace(' ','')) ||
+        b.onclick.toString().includes('filterOrt')) b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  applyFilter();
 }
 
-// Modal
-function openModal(id){
-  document.getElementById(id).classList.add('open');
-  if(id==='apiModal'){
-    const modus=localStorage.getItem('mh_aimodus')||'ollama';
-    document.getElementById('aiModus').value=modus;
-    document.getElementById('ollamaUrl').value=localStorage.getItem('mh_ollamaurl')||'http://localhost:11434';
-    document.getElementById('ollamaModel').value=localStorage.getItem('mh_ollamamodel')||'mistral';
-    document.getElementById('apiIn').value=apiKey;
-    updateModusUI();
+function filterRolle(val, btn) {
+  aktRolle = val;
+  document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
+    if (b.onclick && b.onclick.toString().includes('filterRolle')) b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  applyFilter();
+}
+
+function filterSkill(val, btn) {
+  if (aktSkill === val) {
+    aktSkill = '';
+    btn.classList.remove('skill-active');
+  } else {
+    aktSkill = val;
+    document.querySelectorAll('.filter-bar .fbtn').forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('filterSkill')) b.classList.remove('skill-active');
+    });
+    btn.classList.add('skill-active');
   }
-}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-
-// Toast
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
-
-// AI settings
-function updateModusUI(){
-  const m=document.getElementById('aiModus').value;
-  document.getElementById('ollamaSection').style.display=m==='ollama'?'block':'none';
-  document.getElementById('anthropicSection').style.display=m==='anthropic'?'block':'none';
-}
-function saveKey(){
-  const m=document.getElementById('aiModus').value;
-  localStorage.setItem('mh_aimodus',m);
-  localStorage.setItem('mh_ollamaurl',document.getElementById('ollamaUrl').value.trim());
-  localStorage.setItem('mh_ollamamodel',document.getElementById('ollamaModel').value);
-  apiKey=document.getElementById('apiIn').value.trim();
-  localStorage.setItem('mh_apikey',apiKey);
-  updateApi();closeModal('apiModal');toast('Einstellungen gespeichert.');
-}
-async function testOllama(){
-  const url=(document.getElementById('ollamaUrl').value||'http://localhost:11434')+'/api/tags';
-  const res=document.getElementById('testResult');
-  const btn=document.getElementById('testBtn');
-  res.textContent='Teste…';btn.disabled=true;
-  try{
-    const r=await fetch(url,{signal:AbortSignal.timeout(4000)});
-    const d=await r.json();
-    const models=(d.models||[]).map(m=>m.name).join(', ')||'keine Modelle';
-    res.style.color='var(--green)';res.textContent='Verbunden! Modelle: '+models;
-  }catch(e){
-    res.style.color='var(--red)';res.textContent='Nicht erreichbar. Ollama lauft? Terminal: ollama serve';
-  }
-  btn.disabled=false;
-}
-function updateApi(){
-  const d=document.getElementById('apiDot'),s=document.getElementById('apiStatus');
-  const m=localStorage.getItem('mh_aimodus')||'ollama';
-  if(m==='ollama'){d.classList.add('ok');s.textContent='Ollama (lokal)';}
-  else if(apiKey.startsWith('sk-ant')){d.classList.add('ok');s.textContent='Claude API bereit';}
-  else{d.classList.remove('ok');s.textContent='KI einrichten';}
+  applyFilter();
 }
 
-// Profil
-function getProfil(){return{name:v('pN'),ort:v('pO'),tel:v('pT'),email:v('pE'),adresse:v('pA'),verfuegbar:v('pV'),grund:v('pG'),gehaltMin:v('pGv'),gehaltMax:v('pGb'),werdegang:v('pW'),kompetenzen:v('pK'),zielrollen:v('pZ'),region:v('pR')};}
-function saveProfil(){localStorage.setItem('mh_profil',JSON.stringify(getProfil()));toast('Profil gespeichert.');}
-function loadProfil(){const p=JSON.parse(localStorage.getItem('mh_profil')||'null');if(!p)return;const m={pN:'name',pO:'ort',pT:'tel',pE:'email',pA:'adresse',pV:'verfuegbar',pG:'grund',pGv:'gehaltMin',pGb:'gehaltMax',pW:'werdegang',pK:'kompetenzen',pZ:'zielrollen',pR:'region'};Object.keys(m).forEach(k=>{const el=document.getElementById(k);if(el)el.value=p[m[k]]||el.value;});}
-function v(id){return document.getElementById(id).value;}
+function applyFilter() {
+  let visible = 0;
+  document.querySelectorAll('.job-card').forEach(card => {
+    const ort = card.dataset.ort || '';
+    const rolle = card.dataset.rolle || '';
+    const ho = card.dataset.ho || '';
+    const skills = card.dataset.skills || '';
 
-// Status helpers
-const SL={verschickt:'Verschickt',antwort:'Antwort',gespräch:'Gespräch',absage:'Absage',angebot:'Angebot'};
-const SC={verschickt:'bb',antwort:'ba',gespräch:'bp',absage:'br',angebot:'bg'};
-const SS={verschickt:'sv',antwort:'sa',gespräch:'sg',absage:'sab',angebot:'san'};
+    let showOrt = aktOrt === 'alle' ||
+      (aktOrt === 'koblenz' && ort === 'koblenz') ||
+      (aktOrt === 'nah' && (ort === 'nah' || ort === 'koblenz')) ||
+      (aktOrt === 'hybrid' && ho === '1');
 
-// Dashboard
-function renderDash(){
-  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const offen=bews.filter(b=>!['absage','angebot'].includes(b.status)).length;
-  document.getElementById('s1').textContent=offen;
-  document.getElementById('s2').textContent=stellen.length;
-  document.getElementById('s3').textContent=anCount;
-  const aktive=bews.filter(b=>!['absage','angebot'].includes(b.status)).slice(0,6);
-  document.getElementById('dashBew').innerHTML=aktive.length?aktive.map(b=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:13px;font-weight:500">${b.titel}</div><div style="font-size:12px;color:var(--text2)">${b.firma} · ${b.datum}</div></div><span class="badge ${SC[b.status]||'bgr'}">${SL[b.status]||b.status}</span></div>`).join(''):'<p class="empty">Noch keine aktiven Bewerbungen.</p>';
-}
+    let showRolle = aktRolle === 'alle' || rolle === aktRolle;
+    let showSkill = !aktSkill || skills.toLowerCase().includes(aktSkill.toLowerCase());
 
-// Stellen
-function renderStellen(){
-  const c=document.getElementById('stellenListe');
-  if(!stellen.length){c.innerHTML='<p class="empty">Noch keine Stellen gespeichert.</p>';return;}
-  c.innerHTML=stellen.map((s,i)=>`
-    <div class="job-row">
-      <div class="job-top">
-        <div>
-          <div class="jt">${s.titel}</div>
-          <div class="jc">${s.firma}${s.ort?' — '+s.ort:''}${s.entf?' ('+s.entf+')':''}</div>
-          <div class="jbadges">
-            ${s.link?`<a href="${s.link}" target="_blank" class="badge bb" style="text-decoration:none">Zur Stelle →</a>`:''}
-            ${s.datum===today()?'<span class="badge bg">Heute hinzugefügt</span>':''}
-          </div>
-        </div>
-        <div class="jact">
-          <button class="btn btn-outline btn-sm" onclick="stelleToGen(${i})">Anschreiben</button>
-          <button class="btn btn-outline btn-sm" onclick="stelleToBew(${i})">Bewerben</button>
-          <button class="btn btn-sm br" style="border:1px solid #ffc9c9" onclick="delStelle(${i})">✕</button>
-        </div>
-      </div>
-      ${s.notiz?`<div style="font-size:13px;color:var(--text2);margin-top:8px">${s.notiz}</div>`:''}
-    </div>`).join('');
-  runAnalyse();
-}
-function today(){return new Date().toISOString().split('T')[0];}
-function saveStelle(){
-  const s={titel:v('smT').trim(),firma:v('smF').trim(),ort:v('smO').trim(),entf:v('smE').trim(),link:v('smL').trim(),notiz:v('smN').trim(),datum:today()};
-  if(!s.titel){toast('Bitte Jobtitel eingeben.');return;}
-  stellen.push(s);persist();closeModal('stelleModal');
-  ['smT','smF','smO','smE','smL','smN'].forEach(id=>document.getElementById(id).value='');
-  renderStellen();toast('Stelle gespeichert.');
-}
-function delStelle(i){stellen.splice(i,1);persist();renderStellen();toast('Stelle gelöscht.');}
-function stelleToGen(i){
-  const s=stellen[i];
-  document.getElementById('gTitel').value=s.titel;
-  document.getElementById('gFirma').value=s.firma;
-  document.getElementById('gOrt').value=s.ort||'';
-  document.getElementById('gBes').value=s.notiz||'';
-  showPage('generator',null);
-  document.querySelectorAll('.nav-tab')[3].classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>{if(i!==3)t.classList.remove('active');});
-}
-function stelleToBew(i){
-  const s=stellen[i];
-  document.getElementById('bmT').value=s.titel;
-  document.getElementById('bmF').value=s.firma;
-  document.getElementById('bmD').value=today();
-  openModal('bewModal');
-}
-function saveSnapshot(){
-  const d=today();
-  snaps=snaps.filter(s=>s.d!==d);
-  snaps.push({d,stellen:JSON.parse(JSON.stringify(stellen))});
-  if(snaps.length>14)snaps=snaps.slice(-14);
-  localStorage.setItem('mh_snaps',JSON.stringify(snaps));
-  toast('Snapshot gespeichert.');runAnalyse();
-}
-function runAnalyse(){
-  const d=today();
-  const gd=new Date(Date.now()-86400000).toISOString().split('T')[0];
-  const sg=snaps.find(s=>s.d===gd);
-  // auto-save today's snapshot
-  if(!snaps.find(s=>s.d===d)&&stellen.length){
-    snaps.push({d,stellen:JSON.parse(JSON.stringify(stellen))});
-    if(snaps.length>14)snaps=snaps.slice(-14);
-    localStorage.setItem('mh_snaps',JSON.stringify(snaps));
-  }
-  if(!sg){
-    document.getElementById('aneu').innerHTML='<p class="empty">Kein gestriger Snapshot vorhanden. Morgen wird der Vergleich angezeigt.</p>';
-    document.getElementById('aweg').innerHTML='<p class="empty">Kein Vergleich möglich.</p>';
-    return;
-  }
-  const gi=new Set(sg.stellen.map(s=>s.titel+'|'+s.firma));
-  const hi=new Set(stellen.map(s=>s.titel+'|'+s.firma));
-  const neu=stellen.filter(s=>!gi.has(s.titel+'|'+s.firma));
-  const weg=sg.stellen.filter(s=>!hi.has(s.titel+'|'+s.firma));
-  document.getElementById('aneu').innerHTML=neu.length?neu.map(s=>`<div class="job-row neue" style="margin-bottom:6px"><div class="jt">${s.titel}</div><div class="jc">${s.firma}${s.ort?' — '+s.ort:''}</div></div>`).join(''):'<p class="empty">Keine neuen Stellen.</p>';
-  document.getElementById('aweg').innerHTML=weg.length?weg.map(s=>`<div class="job-row weg" style="margin-bottom:6px"><div class="jt">${s.titel}</div><div class="jc">${s.firma}${s.ort?' — '+s.ort:''}</div></div>`).join(''):'<p class="empty">Keine Stellen weggefallen.</p>';
+    const show = showOrt && showRolle && showSkill;
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('visCount').textContent = visible;
+  document.getElementById('counterBar').textContent = visible + ' von 25 Stellen angezeigt';
 }
 
-// Bewerbungen
-function renderBews(){
-  const c=document.getElementById('bewListe');
-  if(!bews.length){c.innerHTML='<p class="empty">Noch keine Bewerbungen erfasst.</p>';return;}
-  c.innerHTML=bews.map((b,i)=>`
-    <div class="bew-row">
-      <div class="bew-head">
-        <div>
-          <div style="font-weight:500;font-size:14px">${b.titel}</div>
-          <div style="font-size:13px;color:var(--text2)">${b.firma} · Versandt: ${b.datum}${b.kontakt?' · '+b.kontakt:''}</div>
-          ${b.notiz?`<div style="font-size:12px;color:var(--text3);margin-top:3px">${b.notiz}</div>`:''}
-        </div>
-        <button class="btn btn-sm br" style="border:1px solid #ffc9c9;flex-shrink:0" onclick="delBew(${i})">✕</button>
-      </div>
-      <div class="bew-status">
-        ${Object.keys(SL).map(s=>`<button class="sb ${b.status===s?SS[s]:''}" onclick="setStatus(${i},'${s}')">${SL[s]}</button>`).join('')}
-      </div>
-    </div>`).join('');
-}
-function saveBew(){
-  const b={titel:v('bmT').trim(),firma:v('bmF').trim(),datum:v('bmD'),kontakt:v('bmK').trim(),notiz:v('bmN').trim(),status:'verschickt'};
-  if(!b.titel){toast('Bitte Jobtitel eingeben.');return;}
-  bews.unshift(b);persist();closeModal('bewModal');
-  ['bmT','bmF','bmK','bmN'].forEach(id=>document.getElementById(id).value='');
-  renderBews();toast('Bewerbung erfasst.');
-}
-function setStatus(i,s){bews[i].status=s;persist();renderBews();}
-function delBew(i){bews.splice(i,1);persist();renderBews();toast('Bewerbung gelöscht.');}
-
-// Persist
-function persist(){
-  localStorage.setItem('mh_stellen',JSON.stringify(stellen));
-  localStorage.setItem('mh_bews',JSON.stringify(bews));
-}
-
-// Generator
-function buildPrompt(titel,firma,ort,ansprech,bes,stil,p){
-  const stile={modern:"sachlich-modern, direkt, selbstbewusst, keine Floskeln",klassisch:"klassisch-professionell, strukturiert, vertrauenswuerdig",it:"praezise, IT-Projektmanager-Stil, konkrete Zahlen und Fakten",minimal:"kurz und knapp, maximal 3 Absaetze, praegnant"};
-  const anrede=ansprech?"Sehr geehrte/r "+ansprech+",":"Sehr geehrte Damen und Herren,";
-  return "Schreibe ein professionelles deutsches Bewerbungsanschreiben.\n\nSTELLE: "+titel+" bei "+firma+(ort?" in "+ort:"")+"\nBESONDERHEITEN: "+(bes||"keine")+"\n\nBEWERBER:\nName: "+p.name+", "+p.adresse+"\nTel: "+p.tel+", E-Mail: "+p.email+"\nVerfuegbar: "+p.verfuegbar+"\nLetzter Job: "+p.grund+"\nGehalt: "+p.gehaltMin+" - "+p.gehaltMax+"\n\nWERDEGANG:\n"+p.werdegang+"\n\nKOMPETENZEN:\n"+p.kompetenzen+"\n\nSTIL: "+(stile[stil]||stile.modern)+"\n\nREGELN:\n- Kein Studium - Ausbildung Mediengestalter + 15 Jahre Berufserfahrung\n- Nicht schleimend - sachlich, fachbezogen, direkt\n- Konkrete Zahlen: 10+ Portale, 11-20 Mitarbeitende, Scrum und Kanban\n- Betriebsbedingtes Ende bei Modix kurz erwaehnen\n- Maximal 4 Absaetze Haupttext\n- Ausgabe NUR: Ort/Datum rechtsbuendig, Empfaenger ("+firma+"), Betreff, Anrede ("+anrede+"), Absaetze, Mit freundlichen Gruessen, Name\n- KEIN Briefkopf, keine Absender-Kontaktdaten\n- Nur Brieftext ausgeben, kein Kommentar davor oder danach";
-}
-
-async function genAnschreiben(){
-  const modus=localStorage.getItem('mh_aimodus')||'ollama';
-  if(modus==='anthropic'&&!apiKey.startsWith('sk-ant')){openModal('apiModal');return;}
-  const titel=v('gTitel').trim(),firma=v('gFirma').trim(),ort=v('gOrt').trim(),ansprech=v('gAnsprech').trim(),bes=v('gBes').trim(),stil=v('gStil');
-  if(!titel||!firma){toast('Bitte Jobtitel und Unternehmen eingeben.');return;}
-  const p=getProfil();
-  const prompt=buildPrompt(titel,firma,ort,ansprech,bes,stil,p);
-  const out=document.getElementById('genOut');
-  const btn=document.getElementById('genBtn');
-  const model=localStorage.getItem('mh_ollamamodel')||'mistral';
-  const modLabel=modus==='ollama'?'Ollama ('+model+')':'Claude API';
-  out.innerHTML='<span class="ph">Generiere mit '+modLabel+'... (kann 30-60 Sekunden dauern)</span>';
-  btn.disabled=true;
-  ['copyBtn','dlBtn','bewBtn'].forEach(id=>document.getElementById(id).disabled=true);
-  try{
-    let text='';
-    if(modus==='ollama'){
-      const olUrl=(localStorage.getItem('mh_ollamaurl')||'http://localhost:11434')+'/api/generate';
-      let r;
-      try{
-        r=await fetch(olUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:model,prompt:prompt,stream:false})});
-      }catch(corsErr){
-        throw new Error('CORS-Fehler: Ollama muss mit OLLAMA_ORIGINS=* gestartet werden. Nutze die Datei "Bewerbungs_Manager_STARTEN.bat" statt Ollama direkt zu starten.');
+// Skill-chips on cards clickable
+document.querySelectorAll('.skill').forEach(s => {
+  s.addEventListener('click', () => {
+    const skillText = s.textContent.trim().split(' ')[0];
+    // Find the filter button
+    const btns = document.querySelectorAll('.filter-bar .fbtn');
+    let found = false;
+    btns.forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('filterSkill') &&
+          b.textContent.trim().toLowerCase() === skillText.toLowerCase()) {
+        filterSkill(b.textContent.trim(), b);
+        found = true;
       }
-      if(!r.ok)throw new Error('Ollama nicht erreichbar (HTTP '+r.status+'). Nutze die BAT-Datei zum Starten.');
-      const d=await r.json();
-      if(!d.response)throw new Error('Leere Antwort. Modell geladen? Terminal: ollama pull '+model);
-      text=d.response;
-    } else {
-      const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
-      const d=await r.json();
-      if(d.error)throw new Error(d.error.message);
-      text=d.content[0].text;
-    }
-    lastGen=text;
-    out.textContent=lastGen;
-    ['copyBtn','dlBtn','bewBtn'].forEach(id=>document.getElementById(id).disabled=false);
-    anCount++;localStorage.setItem('mh_ancount',anCount);
-    toast('Anschreiben generiert!');
-  }catch(e){
-    let hint=e.message;
-    if(e.message.includes('fetch')||e.message.includes('Failed')||e.message.includes('NetworkError')){
-      hint='Ollama nicht erreichbar. Terminal oeffnen und eingeben: ollama serve';
-    }
-    out.innerHTML='<span style="color:var(--red);font-style:normal">Fehler: '+hint+'</span>';
-    toast('Fehler bei der Generierung.');
-  }
-  btn.disabled=false;
-}
-function copyGen(){navigator.clipboard.writeText(lastGen);toast('In Zwischenablage kopiert.');}
-function dlGen(){
-  const f=v('gFirma')||'Unternehmen',t=v('gTitel')||'Stelle';
-  const b=new Blob([lastGen],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(b);
-  a.download=`Anschreiben_${f.replace(/\s+/g,'_')}_${t.replace(/[^a-zA-Z0-9]/g,'_').slice(0,30)}.txt`;
-  a.click();toast('Datei gespeichert.');
-}
-function genZuBew(){
-  document.getElementById('bmT').value=v('gTitel');
-  document.getElementById('bmF').value=v('gFirma');
-  document.getElementById('bmD').value=today();
-  openModal('bewModal');
-}
-
-// Portale
-const PL=[
-  {n:'StepStone — Product Owner Koblenz',d:'63 aktuelle Stellen, 9 remote, 51 hybrid',u:'https://www.stepstone.de/jobs/product-owner/in-koblenz'},
-  {n:'StepStone — Projektmanager Koblenz',d:'128 aktuelle Stellen in der Region',u:'https://www.stepstone.de/jobs/projektmanager-in/in-koblenz'},
-  {n:'StepStone — Scrum Master Koblenz',d:'Aktuelle Scrum-Master-Stellen',u:'https://www.stepstone.de/jobs/scrum-master/in-koblenz'},
-  {n:'StepStone — Produktmanager Koblenz',d:'37 aktuelle Stellen',u:'https://www.stepstone.de/jobs/produktmanager-in/in-koblenz'},
-  {n:'StepStone — IT-Teamleiter Koblenz',d:'Team-Lead-Stellen in der Region',u:'https://www.stepstone.de/jobs/team-lead/in-koblenz'},
-  {n:'Indeed — Product Owner Koblenz',d:'Indeed-Suche vorausgefüllt',u:'https://de.indeed.com/q-product-owner-l-koblenz-jobs.html'},
-  {n:'Indeed — Projektmanagement Koblenz',d:'Projektmanagement Stellen',u:'https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html'},
-  {n:'LinkedIn — Projektmanager Koblenz',d:'Mit Netzwerkfunktion & Direktkontakt',u:'https://de.linkedin.com/jobs/projektmanager-stellen-koblenz-und-umgebung'},
-  {n:'Rhein-Zeitung Stellenmarkt',d:'Regionale Jobbörse, lokale Arbeitgeber',u:'https://www.rz-stellen.de/stellenangebote/koblenz/it'},
-  {n:'meinestadt.de — IT Koblenz',d:'600+ IT-Stellen Region Koblenz',u:'https://jobs.meinestadt.de/koblenz/jk/0-15711'},
-];
-const PD=[
-  {n:'Debeka — Karriereportal (direkt)',d:'Direktbewerbung empfohlen — bevorzugt Direktbewerber',u:'https://karriere.debeka.de/offene-stellen'},
-  {n:'BWI GmbH — Koblenz IT-Stellen',d:'Bundesgesellschaft IT der Bundeswehr, krisensicher',u:'https://www.bwi.de/karriere/stellenangebote'},
-  {n:'evm Energieversorgung Mittelrhein',d:'Größter kommunaler Energieversorger RLP',u:'https://technischer-bereich-karriere.evm.de/'},
-  {n:'SHD Solutions — Andernach (~15km)',d:'IT-Marktführer Möbel-/Küchenbranche',u:'https://de.indeed.com/q-shd-l-andernach-jobs.html'},
-  {n:'Thales Deutschland — Koblenz',d:'11 offene Stellen in der Region',u:'https://careers.thalesgroup.com/global/en/search-results?keywords=koblenz'},
-  {n:'Löwenstein Medical — Bad Ems (~15km)',d:'Medizintechnik-Familienunternehmen',u:'https://www.loewensteinmedical.de/karriere/stellenangebote/'},
-  {n:'Reisen Aktuell — Karriere direkt',d:'Inhabergeführter Reiseveranstalter Koblenz',u:'https://www.reisenaktuell.com/unternehmen/karriere/'},
-  {n:'1&1 AG — Montabaur (~25km)',d:'32 offene Stellen, Homeoffice möglich',u:'https://www.stepstone.de/cmp/de/1%261-217035/jobs.html'},
-  {n:'MEBEDO GmbH — Urmitz (~10km)',d:'Scrum-Master-Stelle direkt in der Nähe',u:'https://www.stepstone.de/jobs/scrum-master/in-koblenz'},
-  {n:'a11yjobs.com — Accessibility-Stellen',d:'EAA/BFSG-Stellen — dein USP am Markt',u:'https://www.a11yjobs.com'},
-];
-function renderPortale(){
-  document.getElementById('pLokal').innerHTML=PL.map(p=>`<div class="portal-row"><div><div style="font-weight:500;font-size:14px">${p.n}</div><div style="font-size:12px;color:var(--text2);margin-top:2px">${p.d}</div></div><a href="${p.u}" target="_blank" class="plink">Öffnen →</a></div>`).join('');
-  document.getElementById('pDirekt').innerHTML=PD.map(p=>`<div class="portal-row"><div><div style="font-weight:500;font-size:14px">${p.n}</div><div style="font-size:12px;color:var(--text2);margin-top:2px">${p.d}</div></div><a href="${p.u}" target="_blank" class="plink">Öffnen →</a></div>`).join('');
-}
-
-
-
-// Vorausgefüllte Stellen aus Runde 4 (März 2026)
-const defaultStellen = [
-  {titel:'Product Owner (m/w/d)',firma:'Reisen Aktuell GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html',notiz:'Homeoffice möglich. Ausbildung + Erfahrung als Alternative zum Studium akzeptiert. 300 MA.',datum:'2026-03-23'},
-  {titel:'Product Owner / Business Analyst (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'bis 60% Homeoffice. 14 Monatsgehälter. Direktbewerbung bevorzugt.',datum:'2026-03-23'},
-  {titel:'IT-Projektleiter Digitalisierung (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'bis 80% Homeoffice. Parallel zu PO-Stelle bewerben.',datum:'2026-03-23'},
-  {titel:'Portfoliomanager / Projektleiter (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'Homeoffice möglich. PMO-Rolle.',datum:'2026-03-23'},
-  {titel:'Projektmanager (m/w/d)',firma:'SHD Solutions GmbH',ort:'Andernach',entf:'~15km',link:'https://de.indeed.com/q-shd-l-andernach-jobs.html',notiz:'Homeoffice möglich. IT-Marktführer Möbel-/Küchenbranche, 500+ MA.',datum:'2026-03-23'},
-  {titel:'Projektmanager Digitales Messwesen (m/w/d)',firma:'Energieversorgung Mittelrhein (evm)',ort:'Koblenz',entf:'direkt',link:'https://technischer-bereich-karriere.evm.de/',notiz:'Homeoffice möglich. Kommunaler Versorger, krisensicher, 30 Urlaubstage.',datum:'2026-03-23'},
-  {titel:'IT-Projektmanager (m/w/d)',firma:'BWI GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.bwi.de/karriere/stellenangebote',notiz:'Homeoffice möglich. Bundesgesellschaft IT der Bundeswehr. Achtung: hardware-nah.',datum:'2026-03-23'},
-  {titel:'IT-Produktmanager / Projektleiter (m/w/d)',firma:'Thales Deutschland GmbH',ort:'Koblenz',entf:'direkt',link:'https://careers.thalesgroup.com/global/en/search-results?keywords=koblenz',notiz:'Homeoffice möglich. Achtung: Verteidigungstechnik, hardware-nah.',datum:'2026-03-23'},
-  {titel:'Projektleiter Strategieprojekte Digital & KI (m/w/d)',firma:'Lohmann & Rauscher GmbH',ort:'Rengsdorf',entf:'~20km',link:'https://www.stepstone.de/cmp/de/lohmann-rauscher-gmbh-co-kg-43241/jobs',notiz:'Homeoffice möglich. 5.700+ MA. Digital/KI-Projekte. Sehr guter Profil-Match.',datum:'2026-03-23'},
-  {titel:'Projektmanager Digital & KI (m/w/d)',firma:'Lohmann & Rauscher GmbH',ort:'Rengsdorf',entf:'~20km',link:'https://de.indeed.com/q-lohmann-rauscher-l-andernach-jobs.html',notiz:'Homeoffice möglich. Parallel zur Projektleiter-Stelle bewerben.',datum:'2026-03-23'},
-  {titel:'Projektleiter Logistik (m/w/d)',firma:'Ehrhardt + Partner Group (EPG)',ort:'Boppard',entf:'~20km',link:'https://jobs-ads.epg.com/jobposting/d7b0492349721c9d082da6f9adfe54fe368cfc2a',notiz:'Homeoffice möglich. Weltmarktführer Lagerführungssoftware. Reisebereitschaft nötig.',datum:'2026-03-23'},
-  {titel:'IT-Projektleiter / Consultant (m/w/d)',firma:'Ehrhardt + Partner Group (EPG)',ort:'Boppard',entf:'~20km',link:'https://www.epg-jobs.com/de/stellenangebote',notiz:'Homeoffice möglich. Parallel zur Projektleiter-Stelle bewerben.',datum:'2026-03-23'},
-  {titel:'Projektmitarbeiterin/in Digitale Kommunikation (m/w/d)',firma:'Universität Koblenz (ZFUW)',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html',notiz:'TV-L EG 11, unbefristet. Berufserfahrung als Alternative akzeptiert.',datum:'2026-03-23'},
-  {titel:'IT-Prozessmanager / Digitalisierungsbeauftragter (m/w/d)',firma:'Gemeinschaftsklinikum Mittelrhein',ort:'Koblenz',entf:'direkt',link:'https://www.gk.de/beruf-und-karriere/aktuelle-stellenangebote',notiz:'Homeoffice möglich. Krisensicher. Standorte Koblenz/Mayen/Boppard.',datum:'2026-03-23'},
-  {titel:'Scrum Master (m/w/d)',firma:'MEBEDO GmbH',ort:'Urmitz',entf:'~10km',link:'https://www.stepstone.de/jobs/scrum-master/in-koblenz',notiz:'Homeoffice möglich. Softwareprodukt ELEKTROMANAGER. Keine Reisetätigkeit.',datum:'2026-03-23'},
-  {titel:'AI Product Owner (w/m/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/stellenangebote--AI-Product-Owner-w-m-d-Montabaur-11--13741505-inline.html',notiz:'bis 40% Homeoffice. KI-Produkte Customer Care.',datum:'2026-03-23'},
-  {titel:'Product Manager B2B Broadband (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. B2B-Breitbandportfolio, Roadmap.',datum:'2026-03-23'},
-  {titel:'Produkt- und Prozessmanager (m/w/d) Onlineshop',firma:'Löwenstein Medical SE & Co. KG',ort:'Bad Ems',entf:'~15km',link:'https://www.stepstone.de/stellenangebote--Produkt-und-Prozessmanager-m-w-d-fuer-medizinische-Verbrauchsprodukte-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753233-inline.html',notiz:'Ausbildung + Erfahrung akzeptiert. Onlineshop Medizinprodukte.',datum:'2026-03-23'},
-  {titel:'Senior Product Specialist (m/w/d)',firma:'SHD Solutions GmbH',ort:'Andernach',entf:'~15km',link:'https://de.indeed.com/q-shd-l-andernach-jobs.html',notiz:'Homeoffice möglich. Kundenbedürfnisse in Produktentwicklung übersetzen.',datum:'2026-03-23'},
-  {titel:'Prozessmanager IT (m/w/d)',firma:'Energieversorgung Mittelrhein (evm)',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-evm-l-koblenz-jobs.html',notiz:'Homeoffice möglich. Parallel zum PM-Posting bewerben.',datum:'2026-03-23'},
-  {titel:'IT-Projektmanager PMO (m/w/d)',firma:'BWI GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.bwi.de/karriere/stellenangebote',notiz:'Homeoffice möglich. PMO-Rolle. Achtung: Bundeswehr-IT, hardware-nah.',datum:'2026-03-23'},
-  {titel:'IT-Projektleiter / Agile Coach (m/w/d)',firma:'IABG mbH',ort:'Koblenz',entf:'direkt',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Flexible Rolle PL/SM/PO. Achtung: Bundeswehr-nah.',datum:'2026-03-23'},
-  {titel:'Technische/r Projektleiter/in Software (m/w/d)',firma:'Pädagogisches Landesinstitut RLP',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html',notiz:'TV-L EG 11, unbefristet. eSchule-Portale. Frontend-Know-how gefragt.',datum:'2026-03-23'},
-  {titel:'Product Manager B2B Mobile (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Parallel zu anderen 1&1-Stellen bewerben.',datum:'2026-03-23'},
-  {titel:'Head of Product Management & Digital B2B (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Führungsrolle. Gehalt über Band, aber starkes Profil-Match.',datum:'2026-03-23'},
-];
-
-function initStellen() {
-  // Nur laden wenn Liste noch leer ist
-  if (stellen.length === 0) {
-    stellen = defaultStellen;
-    localStorage.setItem('mh_stellen', JSON.stringify(stellen));
-  }
-}
-// Init
-loadProfil();updateApi();initStellen();renderDash();
+    });
+  });
+});
 </script>
 </body>
 </html>
