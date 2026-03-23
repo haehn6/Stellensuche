@@ -114,7 +114,6 @@ textarea{resize:vertical;line-height:1.6;}
     <button class="nav-tab" onclick="showPage('generator',this)">Anschreiben</button>
     <button class="nav-tab" onclick="showPage('portale',this)">Jobbörsen</button>
     <button class="nav-tab" onclick="showPage('profil',this)">Profil</button>
-    <button class="nav-tab" onclick="showPage('github',this)">GitHub</button>
   </div>
   <div class="api-pill" onclick="openModal('apiModal')">
     <div class="api-dot" id="apiDot"></div>
@@ -259,55 +258,6 @@ textarea{resize:vertical;line-height:1.6;}
   </div>
 </div>
 
-
-<!-- GITHUB -->
-<div class="page" id="page-github">
-  <h1>GitHub Sync</h1>
-  <p class="subtitle">Joblisten automatisch auf haehn6.github.io/Stellensuche/ veröffentlichen</p>
-  <div class="card">
-    <h2>Einstellungen</h2>
-    <div class="fr">
-      <label>GitHub Personal Access Token</label>
-      <input type="password" id="ghToken" placeholder="ghp_...">
-      <div style="font-size:12px;color:var(--text3);margin-top:5px">Erstellen unter: GitHub → Settings → Developer settings → Personal access tokens (classic) → repo-Berechtigung aktivieren</div>
-    </div>
-    <div class="fr2">
-      <div><label>Repository Owner</label><input id="ghOwner" value="haehn6"></div>
-      <div><label>Repository Name</label><input id="ghRepo" value="Stellensuche"></div>
-    </div>
-    <div class="fr"><label>Dateiname im Repository</label><input id="ghFile" value="index.html"></div>
-    <div style="display:flex;gap:8px;margin-top:4px">
-      <button class="btn btn-outline btn-sm" onclick="testGH()">Verbindung testen</button>
-      <button class="btn btn-primary" onclick="saveGH()">Einstellungen speichern</button>
-    </div>
-    <div id="ghTestResult" style="font-size:12px;margin-top:10px;color:var(--text2)"></div>
-  </div>
-
-  <div class="card">
-    <h2>Jetzt veröffentlichen</h2>
-    <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Lädt die aktuelle Stellenliste (letzte als HTML gespeicherte Datei) auf GitHub hoch und aktualisiert deine öffentliche Seite.</p>
-    <div class="fr"><label>HTML-Inhalt zum Hochladen</label><textarea id="ghContent" rows="6" placeholder="Füge hier den HTML-Inhalt der Stellenliste ein, oder lade eine Datei..."></textarea></div>
-    <div style="display:flex;gap:8px;align-items:center;margin-bottom:14px">
-      <label class="btn btn-outline btn-sm" style="cursor:pointer">
-        Datei auswählen
-        <input type="file" accept=".html" style="display:none" onchange="loadHtmlFile(this)">
-      </label>
-      <span id="ghFileName" style="font-size:12px;color:var(--text3)">Keine Datei ausgewählt</span>
-    </div>
-    <button class="btn btn-primary" id="ghPushBtn" onclick="pushToGH()">Auf GitHub veröffentlichen</button>
-    <div id="ghPushResult" style="font-size:13px;margin-top:12px;color:var(--text2)"></div>
-  </div>
-
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <div style="font-weight:500;font-size:14px">Aktuelle Seite</div>
-        <div style="font-size:12px;color:var(--text2);margin-top:2px">haehn6.github.io/Stellensuche/</div>
-      </div>
-      <a href="https://haehn6.github.io/Stellensuche/" target="_blank" class="plink">Öffnen →</a>
-    </div>
-  </div>
-</div>
 
 <!-- MODALS -->
 <div class="modal-bg" id="apiModal">
@@ -697,76 +647,45 @@ function renderPortale(){
 }
 
 
-// GitHub
-function saveGH(){
-  localStorage.setItem('mh_gh_token', document.getElementById('ghToken').value.trim());
-  localStorage.setItem('mh_gh_owner', document.getElementById('ghOwner').value.trim());
-  localStorage.setItem('mh_gh_repo', document.getElementById('ghRepo').value.trim());
-  localStorage.setItem('mh_gh_file', document.getElementById('ghFile').value.trim());
-  toast('GitHub-Einstellungen gespeichert.');
-}
-function loadGH(){
-  const t=localStorage.getItem('mh_gh_token')||'';
-  const el=document.getElementById('ghToken');
-  if(el) el.value=t;
-  const o=document.getElementById('ghOwner'); if(o) o.value=localStorage.getItem('mh_gh_owner')||'haehn6';
-  const r=document.getElementById('ghRepo'); if(r) r.value=localStorage.getItem('mh_gh_repo')||'Stellensuche';
-  const f=document.getElementById('ghFile'); if(f) f.value=localStorage.getItem('mh_gh_file')||'index.html';
-}
-async function testGH(){
-  const token=document.getElementById('ghToken').value.trim();
-  const owner=document.getElementById('ghOwner').value.trim();
-  const repo=document.getElementById('ghRepo').value.trim();
-  const res=document.getElementById('ghTestResult');
-  if(!token){res.textContent='Bitte Token eingeben.';res.style.color='var(--red)';return;}
-  res.textContent='Verbinde...';res.style.color='var(--text2)';
-  try{
-    const r=await fetch('https://api.github.com/repos/'+owner+'/'+repo,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
-    const d=await r.json();
-    if(r.ok){res.style.color='var(--green)';res.textContent='Verbindung OK! Repository: '+d.full_name+(d.private?' (privat)':' (öffentlich)');}
-    else{res.style.color='var(--red)';res.textContent='Fehler: '+d.message;}
-  }catch(e){res.style.color='var(--red)';res.textContent='Netzwerkfehler: '+e.message;}
-}
-function loadHtmlFile(input){
-  const file=input.files[0];
-  if(!file)return;
-  document.getElementById('ghFileName').textContent=file.name;
-  const reader=new FileReader();
-  reader.onload=e=>document.getElementById('ghContent').value=e.target.result;
-  reader.readAsText(file,'UTF-8');
-}
-async function pushToGH(){
-  const token=localStorage.getItem('mh_gh_token')||document.getElementById('ghToken').value.trim();
-  const owner=localStorage.getItem('mh_gh_owner')||'haehn6';
-  const repo=localStorage.getItem('mh_gh_repo')||'Stellensuche';
-  const file=localStorage.getItem('mh_gh_file')||'index.html';
-  const content=document.getElementById('ghContent').value;
-  const btn=document.getElementById('ghPushBtn');
-  const res=document.getElementById('ghPushResult');
-  if(!token){res.style.color='var(--red)';res.textContent='Kein GitHub Token gespeichert. Bitte oben eingeben und speichern.';return;}
-  if(!content.trim()){res.style.color='var(--red)';res.textContent='Kein HTML-Inhalt. Bitte Datei auswählen oder Text einfügen.';return;}
-  btn.disabled=true;res.style.color='var(--text2)';res.textContent='Lade hoch...';
-  try{
-    // Get current SHA of file (needed for update)
-    let sha='';
-    const getR=await fetch('https://api.github.com/repos/'+owner+'/'+repo+'/contents/'+file,{headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}});
-    if(getR.ok){const d=await getR.json();sha=d.sha;}
-    // Push new content
-    const body={message:'Stellenliste aktualisiert - '+new Date().toLocaleDateString('de-DE'),content:btoa(unescape(encodeURIComponent(content)))};
-    if(sha)body.sha=sha;
-    const pushR=await fetch('https://api.github.com/repos/'+owner+'/'+repo+'/contents/'+file,{method:'PUT',headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
-    const pushD=await pushR.json();
-    if(pushR.ok){
-      res.style.color='var(--green)';
-      res.innerHTML='Erfolgreich veröffentlicht! <a href="https://'+owner+'.github.io/'+repo+'/" target="_blank" style="color:var(--blue)">Seite öffnen →</a><br><small style="color:var(--text3)">GitHub Pages braucht ca. 1-2 Minuten zum Aktualisieren.</small>';
-      toast('Auf GitHub veröffentlicht!');
-    }else{res.style.color='var(--red)';res.textContent='Fehler: '+pushD.message;}
-  }catch(e){res.style.color='var(--red)';res.textContent='Fehler: '+e.message;}
-  btn.disabled=false;
-}
 
+// Vorausgefüllte Stellen aus Runde 4 (März 2026)
+const defaultStellen = [
+  {titel:'Product Owner (m/w/d)',firma:'Reisen Aktuell GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.stepstone.de/stellenangebote--Product-Owner-m-w-d-Koblenz-Reisen-Aktuell-GmbH--13788666-inline.html',notiz:'Homeoffice möglich. Ausbildung + Erfahrung als Alternative zum Studium akzeptiert. 300 MA.',datum:'2026-03-23'},
+  {titel:'Product Owner / Business Analyst (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'bis 60% Homeoffice. 14 Monatsgehälter. Direktbewerbung bevorzugt.',datum:'2026-03-23'},
+  {titel:'IT-Projektleiter Digitalisierung (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'bis 80% Homeoffice. Parallel zu PO-Stelle bewerben.',datum:'2026-03-23'},
+  {titel:'Portfoliomanager / Projektleiter (w/m/d)',firma:'Debeka-Gruppe',ort:'Koblenz',entf:'direkt',link:'https://debeka.wd3.myworkdayjobs.com/de-DE/Karriere',notiz:'Homeoffice möglich. PMO-Rolle.',datum:'2026-03-23'},
+  {titel:'Projektmanager (m/w/d)',firma:'SHD Solutions GmbH',ort:'Andernach',entf:'~15km',link:'https://de.indeed.com/q-shd-l-andernach-jobs.html',notiz:'Homeoffice möglich. IT-Marktführer Möbel-/Küchenbranche, 500+ MA.',datum:'2026-03-23'},
+  {titel:'Projektmanager Digitales Messwesen (m/w/d)',firma:'Energieversorgung Mittelrhein (evm)',ort:'Koblenz',entf:'direkt',link:'https://technischer-bereich-karriere.evm.de/',notiz:'Homeoffice möglich. Kommunaler Versorger, krisensicher, 30 Urlaubstage.',datum:'2026-03-23'},
+  {titel:'IT-Projektmanager (m/w/d)',firma:'BWI GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.bwi.de/karriere/stellenangebote',notiz:'Homeoffice möglich. Bundesgesellschaft IT der Bundeswehr. Achtung: hardware-nah.',datum:'2026-03-23'},
+  {titel:'IT-Produktmanager / Projektleiter (m/w/d)',firma:'Thales Deutschland GmbH',ort:'Koblenz',entf:'direkt',link:'https://careers.thalesgroup.com/global/en/search-results?keywords=koblenz',notiz:'Homeoffice möglich. Achtung: Verteidigungstechnik, hardware-nah.',datum:'2026-03-23'},
+  {titel:'Projektleiter Strategieprojekte Digital & KI (m/w/d)',firma:'Lohmann & Rauscher GmbH',ort:'Rengsdorf',entf:'~20km',link:'https://www.stepstone.de/cmp/de/lohmann-rauscher-gmbh-co-kg-43241/jobs',notiz:'Homeoffice möglich. 5.700+ MA. Digital/KI-Projekte. Sehr guter Profil-Match.',datum:'2026-03-23'},
+  {titel:'Projektmanager Digital & KI (m/w/d)',firma:'Lohmann & Rauscher GmbH',ort:'Rengsdorf',entf:'~20km',link:'https://de.indeed.com/q-lohmann-rauscher-l-andernach-jobs.html',notiz:'Homeoffice möglich. Parallel zur Projektleiter-Stelle bewerben.',datum:'2026-03-23'},
+  {titel:'Projektleiter Logistik (m/w/d)',firma:'Ehrhardt + Partner Group (EPG)',ort:'Boppard',entf:'~20km',link:'https://jobs-ads.epg.com/jobposting/d7b0492349721c9d082da6f9adfe54fe368cfc2a',notiz:'Homeoffice möglich. Weltmarktführer Lagerführungssoftware. Reisebereitschaft nötig.',datum:'2026-03-23'},
+  {titel:'IT-Projektleiter / Consultant (m/w/d)',firma:'Ehrhardt + Partner Group (EPG)',ort:'Boppard',entf:'~20km',link:'https://www.epg-jobs.com/de/stellenangebote',notiz:'Homeoffice möglich. Parallel zur Projektleiter-Stelle bewerben.',datum:'2026-03-23'},
+  {titel:'Projektmitarbeiterin/in Digitale Kommunikation (m/w/d)',firma:'Universität Koblenz (ZFUW)',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html',notiz:'TV-L EG 11, unbefristet. Berufserfahrung als Alternative akzeptiert.',datum:'2026-03-23'},
+  {titel:'IT-Prozessmanager / Digitalisierungsbeauftragter (m/w/d)',firma:'Gemeinschaftsklinikum Mittelrhein',ort:'Koblenz',entf:'direkt',link:'https://www.gk.de/beruf-und-karriere/aktuelle-stellenangebote',notiz:'Homeoffice möglich. Krisensicher. Standorte Koblenz/Mayen/Boppard.',datum:'2026-03-23'},
+  {titel:'Scrum Master (m/w/d)',firma:'MEBEDO GmbH',ort:'Urmitz',entf:'~10km',link:'https://www.stepstone.de/jobs/scrum-master/in-koblenz',notiz:'Homeoffice möglich. Softwareprodukt ELEKTROMANAGER. Keine Reisetätigkeit.',datum:'2026-03-23'},
+  {titel:'AI Product Owner (w/m/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/stellenangebote--AI-Product-Owner-w-m-d-Montabaur-11--13741505-inline.html',notiz:'bis 40% Homeoffice. KI-Produkte Customer Care.',datum:'2026-03-23'},
+  {titel:'Product Manager B2B Broadband (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. B2B-Breitbandportfolio, Roadmap.',datum:'2026-03-23'},
+  {titel:'Produkt- und Prozessmanager (m/w/d) Onlineshop',firma:'Löwenstein Medical SE & Co. KG',ort:'Bad Ems',entf:'~15km',link:'https://www.stepstone.de/stellenangebote--Produkt-und-Prozessmanager-m-w-d-fuer-medizinische-Verbrauchsprodukte-Bad-Ems-Loewenstein-Medical-SE-Co-KG--13753233-inline.html',notiz:'Ausbildung + Erfahrung akzeptiert. Onlineshop Medizinprodukte.',datum:'2026-03-23'},
+  {titel:'Senior Product Specialist (m/w/d)',firma:'SHD Solutions GmbH',ort:'Andernach',entf:'~15km',link:'https://de.indeed.com/q-shd-l-andernach-jobs.html',notiz:'Homeoffice möglich. Kundenbedürfnisse in Produktentwicklung übersetzen.',datum:'2026-03-23'},
+  {titel:'Prozessmanager IT (m/w/d)',firma:'Energieversorgung Mittelrhein (evm)',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-evm-l-koblenz-jobs.html',notiz:'Homeoffice möglich. Parallel zum PM-Posting bewerben.',datum:'2026-03-23'},
+  {titel:'IT-Projektmanager PMO (m/w/d)',firma:'BWI GmbH',ort:'Koblenz',entf:'direkt',link:'https://www.bwi.de/karriere/stellenangebote',notiz:'Homeoffice möglich. PMO-Rolle. Achtung: Bundeswehr-IT, hardware-nah.',datum:'2026-03-23'},
+  {titel:'IT-Projektleiter / Agile Coach (m/w/d)',firma:'IABG mbH',ort:'Koblenz',entf:'direkt',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Flexible Rolle PL/SM/PO. Achtung: Bundeswehr-nah.',datum:'2026-03-23'},
+  {titel:'Technische/r Projektleiter/in Software (m/w/d)',firma:'Pädagogisches Landesinstitut RLP',ort:'Koblenz',entf:'direkt',link:'https://de.indeed.com/q-projektmanagement-l-koblenz-jobs.html',notiz:'TV-L EG 11, unbefristet. eSchule-Portale. Frontend-Know-how gefragt.',datum:'2026-03-23'},
+  {titel:'Product Manager B2B Mobile (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Parallel zu anderen 1&1-Stellen bewerben.',datum:'2026-03-23'},
+  {titel:'Head of Product Management & Digital B2B (m/w/d)',firma:'1&1 AG',ort:'Montabaur',entf:'~25km',link:'https://www.stepstone.de/jobs/product-owner/in-koblenz',notiz:'Homeoffice möglich. Führungsrolle. Gehalt über Band, aber starkes Profil-Match.',datum:'2026-03-23'},
+];
+
+function initStellen() {
+  // Nur laden wenn Liste noch leer ist
+  if (stellen.length === 0) {
+    stellen = defaultStellen;
+    localStorage.setItem('mh_stellen', JSON.stringify(stellen));
+  }
+}
 // Init
-loadProfil();updateApi();loadGH();renderDash();
+loadProfil();updateApi();initStellen();renderDash();
 </script>
 </body>
 </html>
